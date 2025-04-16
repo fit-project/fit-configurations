@@ -25,9 +25,7 @@ from fit_common.gui.error import Error as ErrorView
 from fit_configurations.controller.tabs.pec.pec import Pec as PecController
 
 from fit_common.core.utility import resolve_path
-
-from fit_configurations.constants import pec
-from fit_configurations.constants import error
+from fit_configurations.lang import load_translations
 
 __is_tab__ = True
 
@@ -37,6 +35,8 @@ class Pec(Tab):
         super().__init__(tab, name)
 
         self.__options = PecController().options
+
+        self.translations = load_translations()
 
         self.__init_ui()
         self.__set_current_config_values()
@@ -49,7 +49,10 @@ class Pec(Tab):
         )
 
         self.enable_pec_layout.addWidget(
-            ClickableLabelView(pec.TWO_FACTOR_AUTH_URL, pec.TWO_FACTOR_AUTH)
+            ClickableLabelView(
+                self.translations["TWO_FACTOR_AUTH_URL"],
+                self.translations["TWO_FACTOR_AUTH"],
+            )
         )
 
         # ENABLE PEC
@@ -179,9 +182,12 @@ class Pec(Tab):
                 QPixmap(resolve_path("ui/icons/red-mark.png")).scaled(20, 20)
             )
             self.info_imap_img.setVisible(True)
-            
+
             error_dlg = ErrorView(
-                QMessageBox.Icon.Critical, pec.LOGIN_FAILED, error.LOGIN_ERROR, str(e)
+                QMessageBox.Icon.Critical,
+                self.translations["LOGIN_FAILED"],
+                self.translations["LOGIN_ERROR"],
+                str(e),
             )
             error_dlg.exec()
 
@@ -205,7 +211,10 @@ class Pec(Tab):
             self.info_smtp_img.setVisible(True)
 
             error_dlg = ErrorView(
-                QMessageBox.Icon.Critical, pec.LOGIN_FAILED, error.LOGIN_ERROR, str(e)
+                QMessageBox.Icon.Critical,
+                self.translations["LOGIN_FAILED"],
+                self.translations["LOGIN_ERROR"],
+                str(e),
             )
             error_dlg.exec()
 

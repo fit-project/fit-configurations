@@ -21,6 +21,8 @@ from fit_configurations.view import classname2objectname
 
 from fit_common.core.utility import resolve_path, get_version
 
+from fit_configurations.lang import load_translations
+
 
 from fit_assets import resources
 
@@ -28,6 +30,7 @@ from fit_assets import resources
 class Configuration(QtWidgets.QDialog):
     def __init__(self, parent=None):
         super(Configuration, self).__init__(parent)
+        self.translations = load_translations()
 
         self.__tabs = []
         self.__init_ui()
@@ -48,24 +51,31 @@ class Configuration(QtWidgets.QDialog):
         self.setWindowFlags(QtCore.Qt.FramelessWindowHint)
         self.setAttribute(QtCore.Qt.WA_TranslucentBackground)
 
-
         # CUSTOM TOP BAR
         self.left_box = self.loaded_ui.findChild(QtWidgets.QWidget, "left_box")
         self.left_box.mouseMoveEvent = self.move_window
 
-        self.minimize_button = self.loaded_ui.findChild(QtWidgets.QPushButton, "minimize_button")
+        self.minimize_button = self.loaded_ui.findChild(
+            QtWidgets.QPushButton, "minimize_button"
+        )
         self.minimize_button.clicked.connect(self.showMinimized)
 
-        self.close_button = self.loaded_ui.findChild(QtWidgets.QPushButton, "close_button")
+        self.close_button = self.loaded_ui.findChild(
+            QtWidgets.QPushButton, "close_button"
+        )
         self.close_button.clicked.connect(self.close)
 
         self.version = self.loaded_ui.findChild(QtWidgets.QLabel, "version")
         self.version.setText(get_version())
 
-        self.cancel_button = self.loaded_ui.findChild(QtWidgets.QPushButton, "cancel_button")
+        self.cancel_button = self.loaded_ui.findChild(
+            QtWidgets.QPushButton, "cancel_button"
+        )
         self.cancel_button.clicked.connect(self.reject)
 
-        self.save_button = self.loaded_ui.findChild(QtWidgets.QPushButton, "save_button")
+        self.save_button = self.loaded_ui.findChild(
+            QtWidgets.QPushButton, "save_button"
+        )
         self.save_button.clicked.connect(self.accept)
 
         self.menu_tabs = self.loaded_ui.findChild(QtWidgets.QTreeWidget, "menu_tabs")
@@ -103,22 +113,26 @@ class Configuration(QtWidgets.QDialog):
 
             if modname in sys.modules and not ispkg:
                 class_name = [
-                    x for x in dir(sys.modules[modname])
+                    x
+                    for x in dir(sys.modules[modname])
                     if isclass(getattr(sys.modules[modname], x))
                     and getattr(sys.modules[modname], "__is_tab__", False)
                     and x.lower() == modname.rsplit(".", 1)[1]
                 ]
 
                 if class_name:
-                    
-                    class_name = class_name[0]
-                    ui_tab = self.loaded_ui.findChild(QtWidgets.QWidget, classname2objectname.__dict__.get(class_name.upper()))
 
+                    class_name = class_name[0]
+                    ui_tab = self.loaded_ui.findChild(
+                        QtWidgets.QWidget,
+                        classname2objectname.__dict__.get(class_name.upper()),
+                    )
 
                     if ui_tab:
                         tab_class = getattr(sys.modules[modname], class_name)
+
                         tab = tab_class(
-                            ui_tab, tabs.__dict__.get(ui_tab.objectName().upper())
+                            ui_tab, self.translations[ui_tab.objectName().upper()]
                         )
                         self.__tabs.append(tab)
 

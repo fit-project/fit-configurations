@@ -17,7 +17,6 @@ from fit_configurations.controller.tabs.network.networktools import (
 from fit_configurations.controller.tabs.network.networkcheck import (
     NetworkControllerCheck as NetworkCheckController,
 )
-from fit_configurations.constants.network import *
 
 
 __is_tab__ = True
@@ -47,8 +46,7 @@ class Network(Tab):
 
         self.traceroute.setEnabled(False)
 
-
-        #TO_DO
+        # TO_DO
         # app = QtWidgets.QApplication.instance()
         # if app.user_type == "admin" and app.npcap_flag != "--no-npcap":
         #     self.traceroute.setEnabled(True)

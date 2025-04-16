@@ -6,12 +6,12 @@
 # SPDX-License-Identifier: GPL-3.0-only
 # -----
 ######
-from fit_configurations.constants import general
+
 from fit_configurations.model.db import Db
 
 from fit_common.core.utility import get_platform
 
-import json
+from fit_configurations.lang import load_translations
 from sqlalchemy import Column, Integer, String
 from sqlalchemy.ext.declarative import declarative_base
 
@@ -31,6 +31,7 @@ class General(Base):
         super().__init__()
         self.db = Db()
         self.metadata.create_all(self.db.engine)
+        self.translations = load_translations() 
 
     def get(self):
         if self.db.session.query(General).first() is None:
@@ -53,7 +54,7 @@ class General(Base):
         }
         self.cases_folder_path = default_path_by_os[get_platform()]
         self.home_page_url = "https://www.google.it"
-        self.user_agent = general.DEFAULT_USER_AGENT
+        self.user_agent = self.translations["DEFAULT_USER_AGENT"]
         self.language = "english"
 
         self.db.session.add(self)

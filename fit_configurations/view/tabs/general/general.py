@@ -20,9 +20,10 @@ from fit_common.gui.clickable_label import ClickableLabel as ClickableLabelView
 from fit_configurations.controller.tabs.general.typesproceedings import (
     TypesProceedings as TypesProceedingsController,
 )
-from fit_configurations.controller.tabs.general.general import General as GeneralController
-from fit_configurations.constants import general
-
+from fit_configurations.controller.tabs.general.general import (
+    General as GeneralController,
+)
+from fit_configurations.lang import load_translations
 
 
 import os
@@ -36,6 +37,8 @@ class General(Tab):
         super().__init__(tab, name)
 
         self.__configuration = GeneralController().configuration
+
+        self.translations = load_translations()
 
         self.__init_ui()
         self.__set_current_config_values()
@@ -64,7 +67,10 @@ class General(Tab):
         )
         # CLIKABLELABEL
         self.user_agent_layout.addWidget(
-            ClickableLabelView(general.USER_AGENT_SITE, general.USER_AGENT_SITE_LABEL)
+            ClickableLabelView(
+                self.translations["USER_AGENT_SITE"],
+                self.translations["USER_AGENT_SITE_LABEL"],
+            )
         )
         # USER AGENT RESET BUTTON
         self.user_agent_button = self.tab.findChild(
@@ -83,14 +89,14 @@ class General(Tab):
     def __select_cases_folder(self):
         cases_folder = QtWidgets.QFileDialog.getExistingDirectory(
             None,
-            general.SELECT_CASE_FOLDER,
+            self.translations["SELECT_CASE_FOLDER"],
             os.path.expanduser(self.cases_folder_path.text()),
             QFileDialog.Option.ShowDirsOnly,
         )
         self.cases_folder_path.setText(cases_folder)
 
     def __default_user_agent(self):
-        self.user_agent.setPlainText(general.DEFAULT_USER_AGENT)
+        self.user_agent.setPlainText(self.translations["DEFAULT_USER_AGENT"])
 
     def __set_current_config_values(self):
         self.cases_folder_path.setText(self.__configuration["cases_folder_path"])
@@ -118,7 +124,7 @@ class General(Tab):
                     item = item.toPlainText()
 
                 self.__configuration[keyword] = item
-    
+
     def __resolve_db_path(self, path):
         if getattr(sys, "frozen", False):
             if sys.platform == "win32":
@@ -133,7 +139,6 @@ class General(Tab):
             resolve_db_path = os.path.abspath(os.path.join(os.getcwd(), path))
 
         return resolve_db_path
-
 
     def accept(self):
         self.__save_current_values()

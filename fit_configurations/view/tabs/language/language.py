@@ -14,13 +14,11 @@ from PySide6 import QtWidgets
 from fit_configurations.view.tab import Tab
 
 
-from  fit_configurations.controller.tabs.language.language import (
+from fit_configurations.controller.tabs.language.language import (
     Language as LanguageController,
 )
 
-from fit_configurations.constants.language import *
-
-
+from fit_configurations.lang import load_translations
 
 
 __is_tab__ = True
@@ -32,6 +30,7 @@ class Language(Tab):
         super().__init__(tab, name)
 
         self.__options = LanguageController().options
+        self.translations = load_translations()
         self.__init_ui()
         self.__set_current_config_values()
 
@@ -42,11 +41,13 @@ class Language(Tab):
             QtWidgets.QComboBox, "report_language"
         )
 
-        self.report_language.addItem(ITALIAN)
-        self.report_language.addItem(ENGLISH)
+        self.report_language.addItem(self.translations["ITALIAN"])
+        self.report_language.addItem(self.translations["ENGLISH"])
 
         self.report_language.lineEdit().setReadOnly(True)
-        self.report_language.lineEdit().setPlaceholderText(REPORT_LANGUAGE)
+        self.report_language.lineEdit().setPlaceholderText(
+            self.translations["REPORT_LANGUAGE"]
+        )
 
     def __set_current_config_values(self):
         self.report_language.setCurrentText(self.__options["language"])
