@@ -14,6 +14,8 @@ from fit_configurations.controller.tabs.packetcapture.packetcapture import (
     PacketCapture as PacketCaptureController,
 )
 
+from fit_common.core.utility import is_admin, is_npcap_installed, get_platform
+
 __is_tab__ = True
 
 
@@ -32,13 +34,6 @@ class PacketCapture(Tab):
             QtWidgets.QCheckBox, "enable_packet_capture_recorder"
         )
 
-        self.enable_packet_capture_recorder.setEnabled(False)
-
-        #TO-DO
-        # app = QtWidgets.QApplication.instance()
-        # if app.user_type == "admin" and app.npcap_flag != "--no-npcap":
-        #     self.enable_packet_capture_recorder.setEnabled(True)
-
         self.enable_packet_capture_recorder.stateChanged.connect(
             self._is_enabled_packet_capture
         )
@@ -55,6 +50,15 @@ class PacketCapture(Tab):
 
     def __set_current_config_values(self):
         enabled = self.__options["enabled"]
+        if enabled and is_admin() and get_platform() != "win":
+            enabled = True
+        elif (
+            enabled and is_admin() and get_platform() == "win" and is_npcap_installed()
+        ):
+            enabled = True
+        else:
+            enabled = False
+        self.enable_packet_capture_recorder.setEnabled(enabled)
         self.enable_packet_capture_recorder.setChecked(enabled)
         self.packet_capture_recorder_filename.setText(self.__options["filename"])
         self._is_enabled_packet_capture()

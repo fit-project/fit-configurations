@@ -18,6 +18,7 @@ from fit_configurations.controller.tabs.network.networkcheck import (
     NetworkControllerCheck as NetworkCheckController,
 )
 
+from fit_common.core.utility import is_admin, is_npcap_installed, get_platform
 
 __is_tab__ = True
 
@@ -43,13 +44,6 @@ class Network(Tab):
         self.ssl_certificate = self.tab.findChild(
             QtWidgets.QCheckBox, "ssl_certificate"
         )
-
-        self.traceroute.setEnabled(False)
-
-        # TO_DO
-        # app = QtWidgets.QApplication.instance()
-        # if app.user_type == "admin" and app.npcap_flag != "--no-npcap":
-        #     self.traceroute.setEnabled(True)
 
         # NTP SERVER
         self.ntp_server = self.tab.findChild(QtWidgets.QLineEdit, "ntp_server")
@@ -78,7 +72,17 @@ class Network(Tab):
         self.ssl_certificate.setChecked(
             self.__configuration_network_tools["ssl_certificate"]
         )
-        self.traceroute.setChecked(self.__configuration_network_tools["traceroute"])
+        enabled = self.__configuration_network_tools["traceroute"]
+        if enabled and is_admin() and get_platform() != "win":
+            enabled = True
+        elif (
+            enabled and is_admin() and get_platform() == "win" and is_npcap_installed()
+        ):
+            enabled = True
+        else:
+            enabled = False
+        self.traceroute.setEnabled(enabled)
+        self.traceroute.setChecked(enabled)
 
     def __set_current_network_check_values(self):
         self.ntp_server.setText(self.__configuration_network_check["ntp_server"])
