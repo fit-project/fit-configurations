@@ -19,11 +19,7 @@ from PySide6.QtCore import QFile
 import fit_configurations.view.tabs as tabs
 from fit_configurations.view import classname2objectname
 
-
-
-
-#fit-commom
-from fit_configurations.utils import resolve_path, get_version
+from fit_common.core.utility import resolve_path, get_version
 
 
 from fit_assets import resources

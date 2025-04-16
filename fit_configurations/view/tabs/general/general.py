@@ -7,6 +7,7 @@
 # -----
 ######
 
+import sys
 
 from PySide6 import QtCore, QtWidgets
 from PySide6.QtWidgets import QFileDialog
@@ -14,8 +15,7 @@ from PySide6.QtWidgets import QFileDialog
 
 from fit_configurations.view.tab import Tab
 
-# fit-common 
-# from view.clickable_label import ClickableLabel as ClickableLabelView
+from fit_common.gui.clickable_label import ClickableLabel as ClickableLabelView
 
 from fit_configurations.controller.tabs.general.typesproceedings import (
     TypesProceedings as TypesProceedingsController,
@@ -23,8 +23,6 @@ from fit_configurations.controller.tabs.general.typesproceedings import (
 from fit_configurations.controller.tabs.general.general import General as GeneralController
 from fit_configurations.constants import general
 
-#fit-commom
-from fit_configurations.utils import resolve_db_path
 
 
 import os
@@ -65,9 +63,9 @@ class General(Tab):
             QtWidgets.QVBoxLayout, "user_agent_layout"
         )
         # CLIKABLELABEL
-        # self.user_agent_layout.addWidget(
-        #     ClickableLabelView(general.USER_AGENT_SITE, general.USER_AGENT_SITE_LABEL)
-        # )
+        self.user_agent_layout.addWidget(
+            ClickableLabelView(general.USER_AGENT_SITE, general.USER_AGENT_SITE_LABEL)
+        )
         # USER AGENT RESET BUTTON
         self.user_agent_button = self.tab.findChild(
             QtWidgets.QPushButton, "user_agent_button"
@@ -80,7 +78,7 @@ class General(Tab):
         )
 
         self.db_path = self.tab.findChild(QtWidgets.QLineEdit, "db_path")
-        self.db_path.setText(resolve_db_path("fit.db"))
+        self.db_path.setText(self.__resolve_db_path("fit.db"))
 
     def __select_cases_folder(self):
         cases_folder = QtWidgets.QFileDialog.getExistingDirectory(
@@ -120,6 +118,22 @@ class General(Tab):
                     item = item.toPlainText()
 
                 self.__configuration[keyword] = item
+    
+    def __resolve_db_path(self, path):
+        if getattr(sys, "frozen", False):
+            if sys.platform == "win32":
+                local_path = os.path.join(os.path.expanduser("~"), "AppData", "Local")
+            elif sys.platform == "darwin":
+                local_path = os.path.expanduser("~/Library/Application Support")
+            else:
+                local_path = os.path.expanduser("~/.local/share")
+
+            resolve_db_path = os.path.join(local_path, path)
+        else:
+            resolve_db_path = os.path.abspath(os.path.join(os.getcwd(), path))
+
+        return resolve_db_path
+
 
     def accept(self):
         self.__save_current_values()

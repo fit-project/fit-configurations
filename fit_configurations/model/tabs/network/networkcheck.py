@@ -9,10 +9,6 @@
 
 from fit_configurations.model.db import Db
 
-#fit-common
-from fit_configurations.utils import resolve_path, get_version
-
-
 import json
 from sqlalchemy import Column, Integer, String, Boolean
 from sqlalchemy.ext.declarative import declarative_base

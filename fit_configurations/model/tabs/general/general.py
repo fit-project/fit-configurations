@@ -8,8 +8,8 @@
 ######
 from fit_configurations.constants import general
 from fit_configurations.model.db import Db
-#fit-common
-from fit_configurations.utils import get_platform
+
+from fit_common.core.utility import get_platform
 
 import json
 from sqlalchemy import Column, Integer, String

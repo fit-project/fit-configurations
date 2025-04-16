@@ -17,15 +17,14 @@ from PySide6.QtWidgets import QMessageBox
 
 from fit_configurations.view.tab import Tab
 
-# fit-common 
-#from view.clickable_label import ClickableLabel as ClickableLabelView
-# fit-common 
-#from view.error import Error as ErrorView
+
+from fit_common.gui.clickable_label import ClickableLabel as ClickableLabelView
+
+from fit_common.gui.error import Error as ErrorView
 
 from fit_configurations.controller.tabs.pec.pec import Pec as PecController
 
-#fit-commom
-from fit_configurations.utils import resolve_path
+from fit_common.core.utility import resolve_path
 
 from fit_configurations.constants import pec
 from fit_configurations.constants import error
@@ -49,10 +48,9 @@ class Pec(Tab):
             QtWidgets.QHBoxLayout, "enable_pec_layout"
         )
 
-        #fit-common
-        # self.enable_pec_layout.addWidget(
-        #     ClickableLabelView(pec.TWO_FACTOR_AUTH_URL, pec.TWO_FACTOR_AUTH)
-        # )
+        self.enable_pec_layout.addWidget(
+            ClickableLabelView(pec.TWO_FACTOR_AUTH_URL, pec.TWO_FACTOR_AUTH)
+        )
 
         # ENABLE PEC
         self.enable_pec = self.tab.findChild(QtWidgets.QCheckBox, "enable_pec")
@@ -181,12 +179,11 @@ class Pec(Tab):
                 QPixmap(resolve_path("ui/icons/red-mark.png")).scaled(20, 20)
             )
             self.info_imap_img.setVisible(True)
-
-            #fit-common
-            # error_dlg = ErrorView(
-            #     QMessageBox.Icon.Critical, pec.LOGIN_FAILED, error.LOGIN_ERROR, str(e)
-            # )
-            # error_dlg.exec()
+            
+            error_dlg = ErrorView(
+                QMessageBox.Icon.Critical, pec.LOGIN_FAILED, error.LOGIN_ERROR, str(e)
+            )
+            error_dlg.exec()
 
     def __verify_smtp(self):
         try:
