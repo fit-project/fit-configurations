@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "fit-configurations"
+version = "0.1.0"
+description = "Modulo di configurazione per il progetto FIT"
+authors = ["FIT Project"]
+packages = [
+    { include = "fit_configurations" }
+]
+
+[tool.poetry.dependencies]
+python = ">=3.9,<3.13"
+PySide6 = "6.9.0"
+sqlalchemy = "^2.0.40"
+
+# fit-common = { path = "../fit-common", develop = true }  # Placeholder for submodule
+fit-assets = {git = "https://github.com/fit-project/fit-assets.git", rev = "main"}
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
