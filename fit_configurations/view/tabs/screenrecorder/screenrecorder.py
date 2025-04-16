@@ -7,142 +7,145 @@
 # -----
 ######
 
-# from PySide6 import QtCore, QtWidgets
-# from view.configurations.tab import Tab
-# from view.audio_setting import AudioSetting
-# from view.util import enable_audio_recording
+from PySide6 import QtCore, QtWidgets
+from fit_configurations.view.tab import Tab
+
+from fit_configurations.view.tabs.screenrecorder.audio_setting import AudioSetting
 
 
-# from controller.configurations.tabs.screenrecorder.screenrecorder import (
-#     ScreenRecorder as ScreenRecorderConfigurationController,
-# )
+from fit_configurations.controller.tabs.screenrecorder.screenrecorder import (
+    ScreenRecorder as ScreenRecorderConfigurationController,
+)
 
-# from common.utility import get_platform
-
-
-# __is_tab__ = True
+from fit_common.core.utility import get_platform
 
 
-# class ScreenRecorder(Tab):
-#     def __init__(self, tab: QtWidgets.QWidget, name: str):
-#         super().__init__(tab, name)
+__is_tab__ = True
 
-#         self.__options = ScreenRecorderConfigurationController().options
 
-#         self.__init_ui()
-#         self.__set_current_config_values()
+class ScreenRecorder(Tab):
+    def __init__(self, tab: QtWidgets.QWidget, name: str):
+        super().__init__(tab, name)
 
-#     def __init_ui(self):
-#         # ENABLE SCREEN RECORDER
-#         self.enable_screen_recorder = self.tab.findChild(
-#             QtWidgets.QCheckBox, "enable_screen_recorder"
-#         )
+        self.__options = ScreenRecorderConfigurationController().options
+        self.audio_setting = AudioSetting()
+        self.audio_setting.accepted.connect(self.__enable_audio_recording)
 
-#         self.enable_screen_recorder.stateChanged.connect(
-#             self.__is_enabled_screen_recorder
-#         )
+        self.__init_ui()
+        self.__set_current_config_values()
 
-#         # ENABLE AUDIO RECORDING
-#         self.enable_audio_recording = self.tab.findChild(
-#             QtWidgets.QCheckBox, "enable_audio_recording"
-#         )
+    def __init_ui(self):
+        # ENABLE SCREEN RECORDER
+        self.enable_screen_recorder = self.tab.findChild(
+            QtWidgets.QCheckBox, "enable_screen_recorder"
+        )
 
-#         self.enable_audio_recording.stateChanged.connect(
-#             self.__is_enabled_audio_recording
-#         )
+        self.enable_screen_recorder.stateChanged.connect(
+            self.__is_enabled_screen_recorder
+        )
 
-#         # AUDIO RECORDING BOX
-#         self.audio_recording_box = self.tab.findChild(
-#             QtWidgets.QFrame, "audio_recording_box"
-#         )
+        # ENABLE AUDIO RECORDING
+        self.enable_audio_recording = self.tab.findChild(
+            QtWidgets.QCheckBox, "enable_audio_recording"
+        )
 
-#         if get_platform() == "lin" or get_platform() == "other":
-#             self.audio_recording_box.setVisible(False)
+        self.enable_audio_recording.stateChanged.connect(
+            self.__is_enabled_audio_recording
+        )
 
-#         # SCREEN RECORDER FILENAME
-#         self.screen_recorder_filename = self.tab.findChild(
-#             QtWidgets.QLineEdit, "screen_recorder_filename"
-#         )
+        # AUDIO RECORDING BOX
+        self.audio_recording_box = self.tab.findChild(
+            QtWidgets.QFrame, "audio_recording_box"
+        )
 
-#         # SETTING AUDIO BUTTON
-#         self.verify_audio_setting = self.tab.findChild(
-#             QtWidgets.QPushButton, "verify_audio_setting"
-#         )
-#         self.verify_audio_setting.clicked.connect(self.__verify_audio_setting)
+        if get_platform() == "lin" or get_platform() == "other":
+            self.audio_recording_box.setVisible(False)
 
-#         # TEMPORARY LABEL
-#         self.temporary_msg = self.tab.findChild(QtWidgets.QLabel, "temporary_msg")
-#         self.temporary_msg.setVisible(False)
+        # SCREEN RECORDER FILENAME
+        self.screen_recorder_filename = self.tab.findChild(
+            QtWidgets.QLineEdit, "screen_recorder_filename"
+        )
 
-#     def __verify_audio_setting(self):
-#         dialog = AudioSetting()
-#         dialog.accepted.connect(self.__enable_audio_recording)
-#         dialog.exec()
+        # SETTING AUDIO BUTTON
+        self.verify_audio_setting = self.tab.findChild(
+            QtWidgets.QPushButton, "verify_audio_setting"
+        )
+        self.verify_audio_setting.clicked.connect(self.__verify_audio_setting)
 
-#     def __enable_audio_recording(self):
-#         if self.enable_screen_recorder.isChecked() and enable_audio_recording():
-#             self.verify_audio_setting.setEnabled(True)
-#             self.enable_audio_recording.setEnabled(True)
-#             app = QtWidgets.QApplication.instance()
-#             if hasattr(app, "is_enabled_audio_recording"):
-#                 self.enable_audio_recording.setChecked(
-#                     getattr(app, "is_enabled_audio_recording")
-#                 )
-#                 self.temporary_msg.setVisible(
-#                     getattr(app, "is_enabled_audio_recording")
-#                 )
-#         else:
-#             self.enable_audio_recording.setEnabled(False)
+        # TEMPORARY LABEL
+        self.temporary_msg = self.tab.findChild(QtWidgets.QLabel, "temporary_msg")
+        self.temporary_msg.setVisible(False)
 
-#     def __is_enabled_screen_recorder(self):
-#         self.screen_recorder_filename.setEnabled(
-#             self.enable_screen_recorder.isChecked()
-#         )
-#         self.verify_audio_setting.setEnabled(self.enable_screen_recorder.isChecked())
-#         self.__enable_audio_recording()
+    def __verify_audio_setting(self):
+        self.audio_setting.exec()
 
-#     def __is_enabled_audio_recording(self):
-#         app = QtWidgets.QApplication.instance()
-#         self.temporary_msg.setVisible(self.enable_audio_recording.isChecked())
-#         setattr(
-#             app, "is_enabled_audio_recording", self.enable_audio_recording.isChecked()
-#         )
+    def __enable_audio_recording(self):
+        if (
+            self.enable_screen_recorder.isChecked()
+            and self.audio_setting.enable_audio_recording()
+        ):
+            self.verify_audio_setting.setEnabled(True)
+            self.enable_audio_recording.setEnabled(True)
+            app = QtWidgets.QApplication.instance()
+            if hasattr(app, "is_enabled_audio_recording"):
+                self.enable_audio_recording.setChecked(
+                    getattr(app, "is_enabled_audio_recording")
+                )
+                self.temporary_msg.setVisible(
+                    getattr(app, "is_enabled_audio_recording")
+                )
+        else:
+            self.enable_audio_recording.setEnabled(False)
 
-#     def __set_current_config_values(self):
-#         self.enable_screen_recorder.setChecked(self.__options["enabled"])
-#         self.screen_recorder_filename.setText(self.__options["filename"])
+    def __is_enabled_screen_recorder(self):
+        self.screen_recorder_filename.setEnabled(
+            self.enable_screen_recorder.isChecked()
+        )
+        self.verify_audio_setting.setEnabled(self.enable_screen_recorder.isChecked())
+        self.__enable_audio_recording()
 
-#         self.__is_enabled_screen_recorder()
-#         self.__enable_audio_recording()
+    def __is_enabled_audio_recording(self):
+        app = QtWidgets.QApplication.instance()
+        self.temporary_msg.setVisible(self.enable_audio_recording.isChecked())
+        setattr(
+            app, "is_enabled_audio_recording", self.enable_audio_recording.isChecked()
+        )
 
-#     def __get_current_values(self):
-#         for keyword in self.__options:
+    def __set_current_config_values(self):
+        self.enable_screen_recorder.setChecked(self.__options["enabled"])
+        self.screen_recorder_filename.setText(self.__options["filename"])
 
-#             __keyword = keyword
+        self.__is_enabled_screen_recorder()
+        self.__enable_audio_recording()
 
-#             # REMAPPING KEYWORD
-#             if keyword == "enabled":
-#                 __keyword = "enable_screen_recorder"
-#             elif keyword == "filename":
-#                 __keyword = "screen_recorder_filename"
+    def __get_current_values(self):
+        for keyword in self.__options:
 
-#             item = self.tab.findChild(QtCore.QObject, __keyword)
+            __keyword = keyword
 
-#             if item is not None:
-#                 if (
-#                     isinstance(item, QtWidgets.QComboBox) is not False
-#                     and item.currentData()
-#                 ):
-#                     item = item.currentData()
-#                 elif isinstance(item, QtWidgets.QLineEdit) is not False and item.text():
-#                     item = item.text()
-#                 elif isinstance(item, QtWidgets.QSpinBox) is not False and item.value():
-#                     item = item.value()
-#                 elif isinstance(item, QtWidgets.QCheckBox):
-#                     item = item.isChecked()
+            # REMAPPING KEYWORD
+            if keyword == "enabled":
+                __keyword = "enable_screen_recorder"
+            elif keyword == "filename":
+                __keyword = "screen_recorder_filename"
 
-#                 self.__options[keyword] = item
+            item = self.tab.findChild(QtCore.QObject, __keyword)
 
-#     def accept(self):
-#         self.__get_current_values()
-#         ScreenRecorderConfigurationController().options = self.__options
+            if item is not None:
+                if (
+                    isinstance(item, QtWidgets.QComboBox) is not False
+                    and item.currentData()
+                ):
+                    item = item.currentData()
+                elif isinstance(item, QtWidgets.QLineEdit) is not False and item.text():
+                    item = item.text()
+                elif isinstance(item, QtWidgets.QSpinBox) is not False and item.value():
+                    item = item.value()
+                elif isinstance(item, QtWidgets.QCheckBox):
+                    item = item.isChecked()
+
+                self.__options[keyword] = item
+
+    def accept(self):
+        self.__get_current_values()
+        ScreenRecorderConfigurationController().options = self.__options

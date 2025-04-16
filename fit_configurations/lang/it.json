@@ -26,7 +26,7 @@
   "PLACEHOLDER_SUBJECT": "Oggetto qualsiasi",
   "TIMESTAMP_TIMEOUT": "Impossibile inviare la richiesta di timestamp. Timeout di lettura.",
   "DELETE_PROJECT_FOLDER": "Errore durante l'esecuzione del metodo shutil.rmtree",
-  "PACKET_CAPTURE": "Errore durante l'acquisizione dei pacchetti di rete! Vedi sotto per i dettagli.",
+  
   "INSERT_UPDATE_CASE_INFO": "Impossibile inserire/aggiornare le informazioni del caso.",
   "SAVE_MAIL": "Errore durante l'esecuzione di save_mailmessages.",
   "MAIL_SERVER_ERROR": "Server o porta IMAP errati.",
@@ -93,8 +93,17 @@
   "TWO_FACTOR_AUTH_URL": "https://github.com/fit-project/fit/wiki/Two-Factor-Authentication",
   "TWO_FACTOR_AUTH": "In case you enabled 2FA, please read this guide",
   "SCREEN_RECORDER": "Screen Recorder",
+  "PACKET_CAPTURE": "Packet Capture",
   "PEC": "PEC",
   "NETWORK": "Network",
   "LANGUAGE": "Language",
-  "TIMESTAMP": "Timestamp"
+  "TIMESTAMP": "Timestamp",
+  "FFMPEG_INSTALLED" : "FFmpeg is installed",
+  "FFMPEG_NOT_INSTALLED" : "FFmpeg is not installed",
+  "VB_CABLE_INSTALLED" : "VB-CABLE is installed",
+  "VB_CABLE_NOT_INSTALLED" : "VB-CABLE is not installed",
+  "VB_CABLE_FIRST_OUPUT_AUDIO_DEVICE" : "VB-CABLE is main output audio device",
+  "VB_CABLE_NOT_FIRST_OUPUT_AUDIO_DEVICE" : "VB-CABLE is not main output audio device",
+  "AUDIO_RECORDING_MANAGEMENT_GUIDE_URL" : "https://github.com/fit-project/fit/wiki/Screen-recording-audio-management",
+  "AUDIO_RECORDING_MANAGEMENT_GUIDE" : "<strong><i><u>For more info read the guide</u></i></strong>"
 }

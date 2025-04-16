@@ -130,7 +130,6 @@ class Configuration(QtWidgets.QDialog):
 
                     if ui_tab:
                         tab_class = getattr(sys.modules[modname], class_name)
-
                         tab = tab_class(
                             ui_tab, self.translations[ui_tab.objectName().upper()]
                         )
