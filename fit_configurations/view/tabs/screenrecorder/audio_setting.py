@@ -106,6 +106,3 @@ class AudioSetting(QtWidgets.QDialog):
             and self.get_vb_cable_virtual_audio_device()
             and self.is_vb_cable_first_ouput_audio_device()
         )
-
-    def __init_ui(self):
-        uic.loadUi(resolve_path("ui/audio_setting/audio_setting.ui"), self)
