@@ -1,8 +1,9 @@
 [tool.poetry]
 name = "fit-configurations"
-version = "0.1.0"
+version = "1.0.0"
 description = "Modulo di configurazione per il progetto FIT"
 authors = ["FIT Project"]
+license = "LGPL-3.0-or-later"
 packages = [
     { include = "fit_configurations" }
 ]

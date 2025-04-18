@@ -3,7 +3,7 @@
 ######
 # -----
 # Copyright (c) 2023 FIT-Project
-# SPDX-License-Identifier: GPL-3.0-only
+# SPDX-License-Identifier: LGPL-3.0-or-later
 # -----
 ######
 
@@ -31,7 +31,7 @@ class General(Base):
         super().__init__()
         self.db = Db()
         self.metadata.create_all(self.db.engine)
-        self.translations = load_translations() 
+        self.translations = load_translations()
 
     def get(self):
         if self.db.session.query(General).first() is None:
