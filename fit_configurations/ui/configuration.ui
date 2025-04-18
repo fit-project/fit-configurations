@@ -23,7 +23,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>FIT Configuration</string>
   </property>
   <widget class="QFrame" name="styleSheet">
    <property name="geometry">
@@ -429,7 +429,7 @@ Button */
                     <number>0</number>
                    </property>
                    <item>
-                    <widget class="QLabel" name="top_logo">
+                    <widget class="QLabel" name="top_logo_label">
                      <property name="minimumSize">
                       <size>
                        <width>42</width>
@@ -454,7 +454,7 @@ Button */
                  </widget>
                 </item>
                 <item>
-                 <widget class="QLabel" name="title_right_info">
+                 <widget class="QLabel" name="title_right_info_label">
                   <property name="sizePolicy">
                    <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
                     <horstretch>0</horstretch>
@@ -1021,7 +1021,7 @@ Button */
                               </widget>
                              </item>
                              <item>
-                              <widget class="QLabel" name="types_proceedings_info">
+                              <widget class="QLabel" name="types_proceedings_info_label">
                                <property name="text">
                                 <string>Proceedings Type List (comma character is separator)</string>
                                </property>
@@ -1127,7 +1127,7 @@ Button */
                               </widget>
                              </item>
                              <item>
-                              <widget class="QLabel" name="db_path_info">
+                              <widget class="QLabel" name="db_path_info_label">
                                <property name="text">
                                 <string>DB path readOnly</string>
                                </property>
@@ -1319,7 +1319,7 @@ Button */
                            <number>0</number>
                           </property>
                           <item>
-                           <widget class="QLabel" name="enable_network_tools_box_title">
+                           <widget class="QLabel" name="enable_network_tools_box_label">
                             <property name="text">
                              <string>Enable network tools</string>
                             </property>
@@ -1918,7 +1918,7 @@ Button */
                                 <number>0</number>
                                </property>
                                <item>
-                                <widget class="QLabel" name="retries_eml_download_title">
+                                <widget class="QLabel" name="retries_eml_download_label">
                                  <property name="sizePolicy">
                                   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                                    <horstretch>0</horstretch>
@@ -1966,7 +1966,7 @@ Button */
                             </layout>
                            </item>
                            <item>
-                            <widget class="QLabel" name="server_configuration_title">
+                            <widget class="QLabel" name="server_configuration_label">
                              <property name="text">
                               <string>Server configuration</string>
                              </property>
@@ -2054,7 +2054,7 @@ QPushButton:disabled {background-color: rgb(52, 59, 72); color: rgba(255, 255, 2
                               </widget>
                              </item>
                              <item>
-                              <widget class="QLabel" name="info_imap_img">
+                              <widget class="QLabel" name="info_imap_img_label">
                                <property name="minimumSize">
                                 <size>
                                  <width>20</width>
@@ -2153,7 +2153,7 @@ QPushButton:disabled {background-color: rgb(52, 59, 72); color: rgba(255, 255, 2
                               </widget>
                              </item>
                              <item>
-                              <widget class="QLabel" name="info_smtp_img">
+                              <widget class="QLabel" name="info_smtp_img_label">
                                <property name="minimumSize">
                                 <size>
                                  <width>20</width>
@@ -2306,7 +2306,7 @@ QPushButton:disabled {background-color: rgb(52, 59, 72); color: rgba(255, 255, 2
                                 </spacer>
                                </item>
                                <item>
-                                <widget class="QPushButton" name="verify_audio_setting">
+                                <widget class="QPushButton" name="verify_audio_setting_button">
                                  <property name="enabled">
                                   <bool>true</bool>
                                  </property>
@@ -2350,7 +2350,7 @@ QPushButton::disabled {background-color: rgb(52, 59, 72); color: rgba(255, 255, 
                              </widget>
                             </item>
                             <item>
-                             <widget class="QLabel" name="temporary_msg">
+                             <widget class="QLabel" name="temporary_msg_label">
                               <property name="text">
                                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; text-decoration: underline; color:#fc0107;&quot;&gt;Enable audio recording is temporary information and will not be saved, so once you quit from FIT it will be lost.&lt;/span&gt;&lt;span style=&quot; color:#fc0107;&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                               </property>
@@ -2497,7 +2497,7 @@ QPushButton::disabled {background-color: rgb(52, 59, 72); color: rgba(255, 255, 
                                 <number>0</number>
                                </property>
                                <item>
-                                <widget class="QLabel" name="timestamp_server_name_box_title">
+                                <widget class="QLabel" name="timestamp_server_name_box_label">
                                  <property name="enabled">
                                   <bool>true</bool>
                                  </property>
@@ -2536,7 +2536,7 @@ QPushButton::disabled {background-color: rgb(52, 59, 72); color: rgba(255, 255, 
                                 <number>0</number>
                                </property>
                                <item>
-                                <widget class="QLabel" name="timestamp_certificate_url_box_title">
+                                <widget class="QLabel" name="timestamp_certificate_url_box_label">
                                  <property name="maximumSize">
                                   <size>
                                    <width>118</width>
@@ -2757,7 +2757,7 @@ QPushButton::disabled {background-color: rgb(52, 59, 72); color: rgba(255, 255, 
                  </widget>
                 </item>
                 <item>
-                 <widget class="QLabel" name="version">
+                 <widget class="QLabel" name="version_label">
                   <property name="text">
                    <string>v1.0.3</string>
                   </property>

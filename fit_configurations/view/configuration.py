@@ -65,7 +65,7 @@ class Configuration(QtWidgets.QDialog):
         )
         self.close_button.clicked.connect(self.close)
 
-        self.version = self.loaded_ui.findChild(QtWidgets.QLabel, "version")
+        self.version = self.loaded_ui.findChild(QtWidgets.QLabel, "version_label")
         self.version.setText(get_version())
 
         self.cancel_button = self.loaded_ui.findChild(
@@ -81,6 +81,8 @@ class Configuration(QtWidgets.QDialog):
         self.menu_tabs = self.loaded_ui.findChild(QtWidgets.QTreeWidget, "menu_tabs")
         self.tabs = self.loaded_ui.findChild(QtWidgets.QStackedWidget, "tabs")
 
+        self.__translate_ui()
+
         self.__load_tabs()
         for tab in self.__tabs:
             self.menu_tabs.addTopLevelItem(QtWidgets.QTreeWidgetItem([tab.name]))
@@ -89,6 +91,49 @@ class Configuration(QtWidgets.QDialog):
             self.tabs.setCurrentIndex(0)
             self.menu_tabs.topLevelItem(0).setSelected(True)
             self.menu_tabs.itemClicked.connect(self.__on_tab_clicked)
+
+    def __translate_ui(self):
+        self.__traverse_widgets(self.loaded_ui)
+
+    def __traverse_widgets(self, widget: QtWidgets.QWidget):
+        self.__apply_translation(widget)
+
+        for child in widget.findChildren(
+            QtWidgets.QWidget, options=QtCore.Qt.FindDirectChildrenOnly
+        ):
+            self.__traverse_widgets(child)
+
+    def __apply_translation(self, widget: QtWidgets.QWidget):
+        name = widget.objectName()
+        if not name:
+            return
+
+        key = name.upper()
+
+        if key not in self.translations:
+            return
+
+        value = self.translations[key]
+
+        # Se ha testo, sostituiscilo
+        if (
+            hasattr(widget, "text")
+            and callable(widget.text)
+            and hasattr(widget, "setText")
+        ):
+            current_text = widget.text()
+            if current_text is not None and current_text.strip() != "":
+                widget.setText(value)
+
+        # Se ha placeholder, sostituiscilo
+        if (
+            hasattr(widget, "placeholderText")
+            and callable(widget.placeholderText)
+            and hasattr(widget, "setPlaceholderText")
+        ):
+            current_placeholder = widget.placeholderText()
+            if current_placeholder is not None and current_placeholder.strip() != "":
+                widget.setPlaceholderText(value)
 
     def __on_tab_clicked(self, item, column):
         self.tabs.setCurrentIndex(self.menu_tabs.indexOfTopLevelItem(item))

@@ -68,12 +68,12 @@ class ScreenRecorder(Tab):
 
         # SETTING AUDIO BUTTON
         self.verify_audio_setting = self.tab.findChild(
-            QtWidgets.QPushButton, "verify_audio_setting"
+            QtWidgets.QPushButton, "verify_audio_setting_button"
         )
         self.verify_audio_setting.clicked.connect(self.__verify_audio_setting)
 
         # TEMPORARY LABEL
-        self.temporary_msg = self.tab.findChild(QtWidgets.QLabel, "temporary_msg")
+        self.temporary_msg = self.tab.findChild(QtWidgets.QLabel, "temporary_msg_label")
         self.temporary_msg.setVisible(False)
 
     def __verify_audio_setting(self):

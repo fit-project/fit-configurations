@@ -91,7 +91,7 @@ class Pec(Tab):
         self.verification_imap_button.clicked.connect(self.__verify_imap)
 
         # VERIFICATION IMAP RESULT ICON
-        self.info_imap_img = self.tab.findChild(QtWidgets.QLabel, "info_imap_img")
+        self.info_imap_img = self.tab.findChild(QtWidgets.QLabel, "info_imap_img_label")
         self.info_imap_img.setVisible(False)
 
         # SERVER SMTP
@@ -109,7 +109,7 @@ class Pec(Tab):
         self.verification_smtp_button.clicked.connect(self.__verify_smtp)
 
         # VERIFICATION SMTP RESULT ICON
-        self.info_smtp_img = self.tab.findChild(QtWidgets.QLabel, "info_smtp_img")
+        self.info_smtp_img = self.tab.findChild(QtWidgets.QLabel, "info_smtp_img_label")
         self.info_smtp_img.setVisible(False)
 
     def __validate_input(self, text):
