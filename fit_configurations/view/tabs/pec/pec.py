@@ -24,7 +24,7 @@ from fit_common.gui.error import Error as ErrorView
 
 from fit_configurations.controller.tabs.pec.pec import Pec as PecController
 
-from fit_common.core.utility import resolve_path
+from fit_common.core.utils import resolve_path
 from fit_configurations.lang import load_translations
 
 __is_tab__ = True

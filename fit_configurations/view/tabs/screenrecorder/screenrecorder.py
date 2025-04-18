@@ -17,7 +17,7 @@ from fit_configurations.controller.tabs.screenrecorder.screenrecorder import (
     ScreenRecorder as ScreenRecorderConfigurationController,
 )
 
-from fit_common.core.utility import get_platform
+from fit_common.core.utils import get_platform
 
 
 __is_tab__ = True

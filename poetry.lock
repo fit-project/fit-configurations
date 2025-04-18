@@ -116,15 +116,15 @@ files = [
 
 [[package]]
 name = "command-runner"
-version = "1.7.2"
+version = "1.7.3"
 description = "Platform agnostic command and shell execution tool, also allows UAC/sudo privilege elevation"
 optional = false
 python-versions = ">=2.7"
 groups = ["main"]
 markers = "sys_platform == \"win32\""
 files = [
-    {file = "command_runner-1.7.2-py3-none-any.whl", hash = "sha256:3d8393262916a008c6023ced70f9ed4e1c37419c38f5d4a49925c01739323f54"},
-    {file = "command_runner-1.7.2.tar.gz", hash = "sha256:94e1a96bfe217432a61fd31d943d36d7a9d42b3e0869958d5cdd0942be552a4c"},
+    {file = "command_runner-1.7.3-py3-none-any.whl", hash = "sha256:fd2b89ccf6686c250eb056fa7ad6acf4817370f81df7b8b70b5cdb65ad5d074a"},
+    {file = "command_runner-1.7.3.tar.gz", hash = "sha256:d1e34a3c7ae218f6d6f705e9683efea1166628618df7ea3b9b20c968688b6835"},
 ]
 
 [package.dependencies]
@@ -193,7 +193,7 @@ windows-tools = {version = "^2.5.0", markers = "sys_platform == \"win32\""}
 type = "git"
 url = "https://github.com/fit-project/fit-common.git"
 reference = "main"
-resolved_reference = "71461d5df30fcf2f68a68ad1e1840375443cf6ba"
+resolved_reference = "1ce863b220a44aa44452bfed4949efb6f075ff57"
 
 [[package]]
 name = "greenlet"

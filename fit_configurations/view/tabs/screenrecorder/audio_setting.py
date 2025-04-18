@@ -12,7 +12,7 @@ from PySide6.QtGui import QPixmap
 from PySide6.QtMultimedia import QMediaDevices
 
 from fit_common.gui.clickable_label import ClickableLabel as ClickableLabelView
-from fit_common.core.utility import is_cmd, resolve_path
+from fit_common.core.utils import is_cmd, resolve_path
 from fit_configurations.lang import load_translations
 from fit_configurations.view.tabs.screenrecorder.audio_setting_ui import (
     Ui_audio_recording_checker_dialog,

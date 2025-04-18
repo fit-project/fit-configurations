@@ -14,7 +14,7 @@ from fit_configurations.controller.tabs.packetcapture.packetcapture import (
     PacketCapture as PacketCaptureController,
 )
 
-from fit_common.core.utility import is_admin, is_npcap_installed, get_platform
+from fit_common.core.utils import is_admin, is_npcap_installed, get_platform
 
 __is_tab__ = True
 
