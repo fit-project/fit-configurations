@@ -17,6 +17,8 @@
   "VB_CABLE_NOT_FIRST_OUPUT_AUDIO_DEVICE": "VB-CABLE is not main output audio device",
   "AUDIO_RECORDING_MANAGEMENT_GUIDE_URL": "https://github.com/fit-project/fit/wiki/Screen-recording-audio-management",
   "AUDIO_RECORDING_MANAGEMENT_GUIDE": "<strong><i><u>For more info read the guide</u></i></strong>",
+  "AUDIO_VIDEO_SETTING_DISCLAIMER" : "Qt Multimedia is used to record video and audio on the screen. However, each operating system handles speakers in its own way, so to record audio regardless of the OS you need to install the third-party software described below.",
+  "TITLE_RIGHT_INFO_LABEL_AUDIO_VIDEO_SETTING": "Audio/Video Recorder Check",
   "GENERAL": "General",
   "SCREEN_RECORDER": "Screen Recorder",
   "PACKET_CAPTURE": "Packet Capture",

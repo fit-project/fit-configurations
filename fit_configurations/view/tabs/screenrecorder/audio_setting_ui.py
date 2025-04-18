@@ -1,12 +1,11 @@
-# -*- coding: utf-8 -*-
-
-################################################################################
-## Form generated from reading UI file 'audio_setting.ui'
-##
-## Created by: Qt User Interface Compiler version 6.8.2
-##
-## WARNING! All changes made in this file will be lost when recompiling UI file!
-################################################################################
+#!/usr/bin/env python3
+# -*- coding:utf-8 -*-
+######
+# -----
+# Copyright (c) 2023 FIT-Project
+# SPDX-License-Identifier: GPL-3.0-only
+# -----
+######
 
 from PySide6.QtCore import (
     QCoreApplication,
@@ -52,6 +51,9 @@ from PySide6.QtWidgets import (
     QVBoxLayout,
     QWidget,
 )
+
+
+from fit_configurations.lang import load_translations
 
 
 class Ui_audio_recording_checker_dialog(object):
@@ -357,46 +359,25 @@ class Ui_audio_recording_checker_dialog(object):
     # setupUi
 
     def retranslateUi(self, audio_recording_checker_dialog):
+        self.translations = load_translations()
         audio_recording_checker_dialog.setWindowTitle(
             QCoreApplication.translate(
                 "audio_recording_checker_dialog", "FIT Audio Recorder Checker", None
             )
         )
-        self.disclaimer.setText(
-            QCoreApplication.translate(
-                "audio_recording_checker_dialog",
-                "Qt Multimedia is used to record video and audio on the screen. However, each operating system handles speakers in its own way, so to record audio regardless of the OS you need to install the third-party software described below.",
-                None,
-            )
-        )
+        self.disclaimer.setText(self.translations["AUDIO_VIDEO_SETTING_DISCLAIMER"])
         self.ffmpeg_installed_img.setText("")
-        self.ffmpeg_installed_msg.setText(
-            QCoreApplication.translate(
-                "audio_recording_checker_dialog", "FFmpeg is installed", None
-            )
-        )
+        self.ffmpeg_installed_msg.setText(self.translations["FFMPEG_INSTALLED"])
         self.vb_cable_installed_img.setText("")
-        self.vb_cable_installed_msg.setText(
-            QCoreApplication.translate(
-                "audio_recording_checker_dialog", "VB-CABLE is installed", None
-            )
-        )
+        self.vb_cable_installed_msg.setText(self.translations["VB_CABLE_INSTALLED"])
         self.vb_cable_first_output_audio_device_img.setText("")
         self.vb_cable_first_output_audio_device_msg.setText(
-            QCoreApplication.translate(
-                "audio_recording_checker_dialog",
-                "VB-CABLE is first output audio device",
-                None,
-            )
+            self.translations["VB_CABLE_FIRST_OUPUT_AUDIO_DEVICE"]
         )
-        self.ok_button.setText(
-            QCoreApplication.translate("audio_recording_checker_dialog", "Ok", None)
-        )
+        self.ok_button.setText("Ok")
         self.top_logo.setText("")
         self.title_right_info.setText(
-            QCoreApplication.translate(
-                "audio_recording_checker_dialog", "Audio Recorder Check", None
-            )
+            self.translations["TITLE_RIGHT_INFO_LABEL_AUDIO_VIDEO_SETTING"]
         )
 
     # retranslateUi
