@@ -649,7 +649,7 @@ Button */
                   </property>
                   <property name="maximumSize">
                    <size>
-                    <width>120</width>
+                    <width>160</width>
                     <height>16777215</height>
                    </size>
                   </property>
@@ -723,7 +723,7 @@ Button */
                       <string notr="true">background: transparent;</string>
                      </property>
                      <property name="currentIndex">
-                      <number>0</number>
+                      <number>2</number>
                      </property>
                      <widget class="QWidget" name="general">
                       <property name="maximumSize">
