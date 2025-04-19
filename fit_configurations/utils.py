@@ -15,10 +15,6 @@ def resolve_path(path):
     return resolved_path
 
 
-def get_version():
-    return "v0.0.0"
-
-
 def resolve_db_path(path):
     if getattr(sys, "frozen", False):
         if sys.platform == "win32":
