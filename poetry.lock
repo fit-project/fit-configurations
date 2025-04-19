@@ -168,11 +168,11 @@ PySide6 = "6.9.0"
 type = "git"
 url = "https://github.com/fit-project/fit-assets.git"
 reference = "main"
-resolved_reference = "f8028a49aef8f9a09e51c78ff4c5b98652798137"
+resolved_reference = "c69bada5554a55e6414a66f1a9e4891d6b861f48"
 
 [[package]]
 name = "fit-common"
-version = "0.1.0"
+version = "0.1.1"
 description = "Shared code between modules of the FIT project"
 optional = false
 python-versions = ">=3.9,<3.13"
@@ -193,7 +193,7 @@ windows-tools = {version = "^2.5.0", markers = "sys_platform == \"win32\""}
 type = "git"
 url = "https://github.com/fit-project/fit-common.git"
 reference = "main"
-resolved_reference = "1ce863b220a44aa44452bfed4949efb6f075ff57"
+resolved_reference = "f19d341e0eb8db3bfa42d2c944e4e3af6ed81449"
 
 [[package]]
 name = "greenlet"
