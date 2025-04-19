@@ -1,6 +1,9 @@
 import os
 import sys
 
+from fit_configurations.controller.tabs.language import language as LanguageController
+
+
 def resolve_path(path):
     if getattr(sys, "frozen", False):
         # If the 'frozen' flag is set, we are in bundled-app mode!
@@ -11,8 +14,10 @@ def resolve_path(path):
 
     return resolved_path
 
+
 def get_version():
     return "v0.0.0"
+
 
 def resolve_db_path(path):
     if getattr(sys, "frozen", False):
@@ -43,3 +48,8 @@ def get_platform():
         return "other"
 
     return platforms[sys.platform]
+
+
+def get_language():
+    controller = LanguageController()
+    return controller.options["language"]
