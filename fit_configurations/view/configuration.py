@@ -180,9 +180,6 @@ class Configuration(QtWidgets.QDialog):
                         )
                         self.__tabs.append(tab)
 
-    def show_configuration_dialog(self):
-        self.exec()
-
     def accept(self):
         for tab in self.__tabs:
             tab.accept()
