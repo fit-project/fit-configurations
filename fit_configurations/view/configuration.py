@@ -15,11 +15,13 @@ from importlib import import_module
 from PySide6 import QtCore, QtWidgets
 from PySide6.QtUiTools import QUiLoader
 from PySide6.QtCore import QFile
+from importlib.resources import files
+
 
 import fit_configurations.view.tabs as tabs
 from fit_configurations.view import classname2objectname
 
-from fit_common.core.utils import resolve_path, get_version
+from fit_common.core.utils import get_version
 
 from fit_configurations.lang import load_translations
 
@@ -37,7 +39,8 @@ class Configuration(QtWidgets.QDialog):
 
     def __init_ui(self):
         loader = QUiLoader()
-        ui_file = QFile(resolve_path("fit_configurations/ui/configuration.ui"))
+        ui_path = files("fit_configurations.ui").joinpath("configuration.ui")
+        ui_file = QFile(str(ui_path))
         ui_file.open(QFile.ReadOnly)
         self.loaded_ui = loader.load(ui_file, self)
         ui_file.close()
