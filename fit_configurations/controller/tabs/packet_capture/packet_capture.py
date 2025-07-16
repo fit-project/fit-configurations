@@ -6,7 +6,7 @@
 ######
 
 from fit_configurations.controller.tabs.tab import TabController
-from fit_configurations.model.tabs.packet_capture.packetcapture import PacketCapture as PacketCaptureModel
+from fit_configurations.model.tabs.packet_capture.packet_capture import PacketCaptureModel
 
 
 class PacketCaptureController(TabController):

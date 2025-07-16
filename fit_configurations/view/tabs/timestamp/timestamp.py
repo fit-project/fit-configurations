@@ -7,79 +7,34 @@
 # -----
 ######
 
-from PySide6 import QtCore, QtWidgets
-from fit_configurations.view.tab import Tab
-
-from fit_configurations.controller.tabs.timestamp.timestamp import (
-    Timestamp as TimestampController,
-)
-
-__is_tab__ = True
+from PySide6 import QtWidgets
+from fit_configurations.view.tabs.tab import TabView
+from fit_configurations.controller.tabs.timestamp.timestamp import TimestampController
 
 
-class Timestamp(Tab):
-    def __init__(self, tab: QtWidgets.QWidget, name: str):
-        super().__init__(tab, name)
+class TimestampView(TabView):
+    controller_class = TimestampController
 
-        self.__options = TimestampController().options
+    def init_ui(self):
+        self.enable_timestamp = self.find(QtWidgets.QCheckBox, "enable_timestamp")
+        self.timestamp_settings = self.find(QtWidgets.QFrame, "timestamp_settings")
+        self.timestamp_server_name = self.find(QtWidgets.QLineEdit, "timestamp_server_name")
+        self.timestamp_certificate_url = self.find(QtWidgets.QLineEdit, "timestamp_certificate_url")
 
-        self.__init_ui()
-        self.__set_current_config_values()
+        self.enable_timestamp.stateChanged.connect(self._toggle_timestamp_settings)
 
-    def __init_ui(self):
-        # ENABLE TIMESTAMP
-        self.enable_timestamp = self.tab.findChild(
-            QtWidgets.QCheckBox, "enable_timestamp"
-        )
-
-        self.enable_timestamp.stateChanged.connect(self._is_enabled_timestamp)
-
-        # TIMESTAMP SETTINGS BOX
-        self.timestamp_settings = self.tab.findChild(
-            QtWidgets.QFrame, "timestamp_settings"
-        )
-
-        # TIMESTAMP SERVER NAME
-        self.timestamp_server_name = self.tab.findChild(
-            QtWidgets.QLineEdit, "timestamp_server_name"
-        )
-
-        # TIMESTAMP CERTIFICATE URL
-        self.timestamp_certificate_url = self.tab.findChild(
-            QtWidgets.QLineEdit, "timestamp_certificate_url"
-        )
-
-    def _is_enabled_timestamp(self):
+    def _toggle_timestamp_settings(self):
         self.timestamp_settings.setEnabled(self.enable_timestamp.isChecked())
 
-    def __set_current_config_values(self):
-        self.enable_timestamp.setChecked(self.__options["enabled"])
-        self.timestamp_server_name.setText(self.__options["server_name"])
-        self.timestamp_certificate_url.setText(self.__options["cert_url"])
-        self._is_enabled_timestamp()
+    def set_form_data(self, data):
+        self.enable_timestamp.setChecked(data.get("enabled", False))
+        self.timestamp_server_name.setText(data.get("server_name", ""))
+        self.timestamp_certificate_url.setText(data.get("cert_url", ""))
+        self._toggle_timestamp_settings()
 
-    def __get_current_values(self):
-        for keyword in self.__options:
-            __keyword = keyword
-
-            # REMAPPING KEYWORD
-            if keyword == "enabled":
-                __keyword = "enable_timestamp"
-            elif keyword == "server_name":
-                __keyword = "timestamp_server_name"
-            elif keyword == "cert_url":
-                __keyword = "timestamp_certificate_url"
-
-            item = self.tab.findChild(QtCore.QObject, __keyword)
-
-            if item is not None:
-                if isinstance(item, QtWidgets.QLineEdit) is not False and item.text():
-                    item = item.text()
-                elif isinstance(item, QtWidgets.QCheckBox):
-                    item = item.isChecked()
-
-                self.__options[keyword] = item
-
-    def accept(self):
-        self.__get_current_values()
-        TimestampController().options = self.__options
+    def collect_form_data(self):
+        return {
+            "enabled": self.enable_timestamp.isChecked(),
+            "server_name": self.timestamp_server_name.text().strip(),
+            "cert_url": self.timestamp_certificate_url.text().strip(),
+        }

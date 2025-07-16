@@ -28,16 +28,6 @@ from fit_assets import resources
 
 
 class Configuration(QtWidgets.QDialog):
-    CLASS_TO_OBJECT_NAME = {
-        "PACKETCAPTURE": "packet_capture",
-        "SCREENRECORDER": "screen_recorder",
-        "PEC": "pec",
-        "NETWORK": "network",
-        "LANGUAGE": "language",
-        "TIMESTAMP": "timestamp",
-        "GENERAL": "general",
-    }
-
     def __init__(self, parent=None):
         super(Configuration, self).__init__(parent)
         self.translations = load_translations()
@@ -161,40 +151,28 @@ class Configuration(QtWidgets.QDialog):
     def __load_tabs(self):
         package = tabs
 
-        for importer, modname, ispkg in pkgutil.walk_packages(
-            path=package.__path__, prefix=package.__name__ + ".", onerror=lambda x: None
+        for _, modname, ispkg in pkgutil.walk_packages(
+            path=package.__path__,
+            prefix=package.__name__ + ".",
+            onerror=lambda x: None,
         ):
-            if modname not in sys.modules and not ispkg:
+            if ispkg:
+                continue
+
+            if modname not in sys.modules:
                 import_module(modname)
 
-            if modname in sys.modules and not ispkg:
-                for x in dir(sys.modules[modname]):
-                    attr = getattr(sys.modules[modname], x)
-                    if isclass(attr) and getattr(attr, "__is_tab__", False):
-                        print(attr)
-
-                class_name = [
-                    x
-                    for x in dir(sys.modules[modname])
-                    if isclass(getattr(sys.modules[modname], x))
-                    and getattr(sys.modules[modname], "__is_tab__", False)
-                    and x.lower() == modname.rsplit(".", 1)[1]
-                ]
-
-                if class_name:
-                    class_name = class_name[0]
+            module = sys.modules[modname]
+            for name in dir(module):
+                obj = getattr(module, name)
+                if isclass(obj) and getattr(obj, "__is_tab__", False):
+                    ui_name = name.replace("View", "").lower()
+                    ui_tab = self.loaded_ui.findChild(QtWidgets.QWidget, ui_name)
                     
-                    ui_tab = self.loaded_ui.findChild(
-                        QtWidgets.QWidget,
-                        self.CLASS_TO_OBJECT_NAME.get(class_name.upper()),
-                    )
-
                     if ui_tab:
-                        tab_class = getattr(sys.modules[modname], class_name)
-                        tab = tab_class(
-                            ui_tab, self.translations[ui_tab.objectName().upper()]
-                        )
-                        self.__tabs.append(tab)
+                        tab_instance = obj(ui_tab, self.translations[ui_name.upper()])
+                        self.__tabs.append(tab_instance)
+
 
     def accept(self):
         for tab in self.__tabs:

@@ -9,7 +9,7 @@
 
 
 from fit_configurations.controller.tabs.tab import TabController
-from fit_configurations.model.tabs.pec.pec import Pec as PecModel
+from fit_configurations.model.tabs.pec.pec import PecModel
 
 
 class PecController(TabController):
