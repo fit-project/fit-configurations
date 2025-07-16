@@ -7,10 +7,10 @@
 # -----
 ######
 
-from fit_configurations.model.tabs.language.language import Language as LanguageModel
+from fit_configurations.model.tabs.language.language import LanguageModel
 
 
-class Language:
+class LanguageController:
     _options = {}
 
     def __init__(self):

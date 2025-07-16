@@ -16,7 +16,7 @@ from sqlalchemy.orm import declarative_base
 Base = declarative_base()
 
 
-class Language(Base):
+class LanguageModel(Base):
     __tablename__ = "configuration_language"
 
     id = Column(Integer, primary_key=True)
@@ -28,13 +28,13 @@ class Language(Base):
         self.metadata.create_all(self.db.engine)
 
     def get(self):
-        if self.db.session.query(Language).first() is None:
+        if self.db.session.query(LanguageModel).first() is None:
             self.set_default_values()
 
-        return self.db.session.query(Language).all()
+        return self.db.session.query(LanguageModel).all()
 
     def update(self, options):
-        self.db.session.query(Language).filter(Language.id == options.get("id")).update(
+        self.db.session.query(LanguageModel).filter(LanguageModel.id == options.get("id")).update(
             options
         )
         self.db.session.commit()

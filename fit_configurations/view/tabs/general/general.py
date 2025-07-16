@@ -20,7 +20,7 @@ from fit_common.core.utils import resolve_db_path
 
 from fit_configurations.controller.tabs.general.legal_proceeding_type import LegalProceedingTypeController
 from fit_configurations.controller.tabs.general.general import (
-    General as GeneralController,
+    GeneralController as GeneralController,
 )
 from fit_configurations.lang import load_translations
 

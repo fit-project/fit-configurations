@@ -10,7 +10,7 @@
 from fit_configurations.view.configuration import Configuration
 
 from fit_configurations.controller.tabs.language.language import (
-    Language as LanguageController,
+    LanguageController as LanguageController,
 )
 
 

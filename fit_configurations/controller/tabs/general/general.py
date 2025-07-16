@@ -7,12 +7,12 @@
 # -----
 ######
 
-from fit_configurations.model.tabs.general.general import General as GeneralModel
+from fit_configurations.model.tabs.general.general import GeneralModel
+from sqlalchemy.inspection import inspect
 
-import json
 
 
-class General:
+class GeneralController:
     _configuration = {}
 
     def __init__(self):
@@ -21,12 +21,10 @@ class General:
 
     @property
     def configuration(self):
+        instance = self._configuration[0]
         return {
-            key: value
-            for key, value in self._configuration[0].__dict__.items()
-            if not key.startswith("_")
-            and not key.startswith("__")
-            and not key.startswith("db")
+            column.key: getattr(instance, column.key)
+            for column in inspect(instance).mapper.column_attrs
         }
 
     # a setter function

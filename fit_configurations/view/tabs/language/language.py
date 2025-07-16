@@ -15,7 +15,7 @@ from fit_configurations.view.tab import Tab
 
 
 from fit_configurations.controller.tabs.language.language import (
-    Language as LanguageController,
+    LanguageController as LanguageController,
 )
 
 from fit_configurations.lang import load_translations
@@ -24,7 +24,7 @@ from fit_configurations.lang import load_translations
 __is_tab__ = True
 
 
-class Language(Tab):
+class LanguageView(Tab):
 
     def __init__(self, tab: QtWidgets.QWidget, name: str):
         super().__init__(tab, name)

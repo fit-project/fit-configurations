@@ -19,7 +19,7 @@ from sqlalchemy.orm import declarative_base
 Base = declarative_base()
 
 
-class General(Base):
+class GeneralModel(Base):
     __tablename__ = "configuration_general"
 
     id = Column(Integer, primary_key=True)
@@ -35,14 +35,14 @@ class General(Base):
         self.translations = load_translations()
 
     def get(self):
-        if self.db.session.query(General).first() is None:
+        if self.db.session.query(GeneralModel).first() is None:
             self.set_default_values()
 
-        return self.db.session.query(General).all()
+        return self.db.session.query(GeneralModel).all()
 
     def update(self, configuration):
-        self.db.session.query(General).filter(
-            General.id == configuration.get("id")
+        self.db.session.query(GeneralModel).filter(
+            GeneralModel.id == configuration.get("id")
         ).update(configuration)
         self.db.session.commit()
 
