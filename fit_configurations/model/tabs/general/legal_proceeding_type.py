@@ -16,8 +16,8 @@ from sqlalchemy.orm import declarative_base
 Base = declarative_base()
 
 
-class TypesProceedings(Base):
-    __tablename__ = "configuration_type_proceedings"
+class LegalProceedingTypeModel(Base):
+    __tablename__ = "configuration_legal_proceeding_types"
 
     id = Column(Integer, primary_key=True)
     name = Column(String)
@@ -28,16 +28,16 @@ class TypesProceedings(Base):
         self.metadata.create_all(self.db.engine)
 
     def get(self):
-        if self.db.session.query(TypesProceedings).first() is None:
+        if self.db.session.query(LegalProceedingTypeModel).first() is None:
             self.set_default_values()
 
-        return self.db.session.query(TypesProceedings).all()
+        return self.db.session.query(LegalProceedingTypeModel).all()
 
     def add(self, names):
         rows = []
         for name in names:
             if name:
-                proceedings = TypesProceedings()
+                proceedings = LegalProceedingTypeModel()
                 proceedings.name = name.strip()
                 rows.append(proceedings)
 
@@ -46,8 +46,8 @@ class TypesProceedings(Base):
 
     def delete(self, ids):
         if ids:
-            self.db.session.query(TypesProceedings).filter(
-                TypesProceedings.id.in_(ids)
+            self.db.session.query(LegalProceedingTypeModel).filter(
+                LegalProceedingTypeModel.id.in_(ids)
             ).delete(synchronize_session=False)
             self.db.session.commit()
 

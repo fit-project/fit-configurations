@@ -7,17 +7,15 @@
 # -----
 ######
 
-from fit_configurations.model.tabs.general.legal_proceeding_type import (
-    TypesProceedings as TypesProceedingsModel,
-)
+from fit_configurations.model.tabs.general.legal_proceeding_type import LegalProceedingTypeModel
 
 
-class TypesProceedings:
+class LegalProceedingTypeController:
     _proceedings = []
     _names = []
 
     def __init__(self):
-        self.model = TypesProceedingsModel()
+        self.model = LegalProceedingTypeModel()
 
         _proceedings = self.model.get()
 

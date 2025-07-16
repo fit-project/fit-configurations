@@ -18,9 +18,7 @@ from fit_configurations.view.tab import Tab
 from fit_common.gui.clickable_label import ClickableLabel as ClickableLabelView
 from fit_common.core.utils import resolve_db_path
 
-from fit_configurations.controller.tabs.general.legal_proceeding_type import (
-    TypesProceedings as TypesProceedingsController,
-)
+from fit_configurations.controller.tabs.general.legal_proceeding_type import LegalProceedingTypeController
 from fit_configurations.controller.tabs.general.general import (
     General as GeneralController,
 )
@@ -104,7 +102,7 @@ class General(Tab):
         self.home_page_url.setText(self.__configuration["home_page_url"])
         self.user_agent.setPlainText(self.__configuration["user_agent"])
         self.types_proceedings.setPlainText(
-            ",".join([str(elem) for elem in TypesProceedingsController().names])
+            ",".join([str(elem) for elem in LegalProceedingTypeController().names])
         )
 
     def __save_current_values(self):
@@ -129,6 +127,6 @@ class General(Tab):
     def accept(self):
         self.__save_current_values()
         GeneralController().configuration = self.__configuration
-        TypesProceedingsController().names = self.types_proceedings.toPlainText().split(
+        LegalProceedingTypeController().names = self.types_proceedings.toPlainText().split(
             ","
         )
