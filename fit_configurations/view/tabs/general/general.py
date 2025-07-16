@@ -18,7 +18,7 @@ from fit_configurations.view.tab import Tab
 from fit_common.gui.clickable_label import ClickableLabel as ClickableLabelView
 from fit_common.core.utils import resolve_db_path
 
-from fit_configurations.controller.tabs.general.typesproceedings import (
+from fit_configurations.controller.tabs.general.legal_proceeding_type import (
     TypesProceedings as TypesProceedingsController,
 )
 from fit_configurations.controller.tabs.general.general import (

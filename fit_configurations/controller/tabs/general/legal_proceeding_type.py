@@ -7,7 +7,7 @@
 # -----
 ######
 
-from fit_configurations.model.tabs.general.typesproceedings import (
+from fit_configurations.model.tabs.general.legal_proceeding_type import (
     TypesProceedings as TypesProceedingsModel,
 )
 
