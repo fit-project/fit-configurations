@@ -7,16 +7,13 @@
 # -----
 ######
 
-from fit_configurations.model.db import Db
 from sqlalchemy import Column, Integer, String, Boolean
-from sqlalchemy.orm import declarative_base
+from fit_configurations.model.tabs.tab import TabModel
 
 
-Base = declarative_base()
-
-
-class Pec(Base):
+class PecModel(TabModel):
     __tablename__ = "configuration_pec"
+
     id = Column(Integer, primary_key=True)
     enabled = Column(Boolean)
     pec_email = Column(String)
@@ -27,21 +24,8 @@ class Pec(Base):
     imap_port = Column(String)
     retries = Column(Integer)
 
-    def __init__(self) -> None:
-        super().__init__()
-        self.db = Db()
-        self.metadata.create_all(self.db.engine)
-
-    def get(self):
-        if self.db.session.query(Pec).first() is None:
-            self.set_default_values()
-        return self.db.session.query(Pec).all()
-
-    def update(self, options):
-        self.db.session.query(Pec).filter(Pec.id == options.get("id")).update(options)
-        self.db.session.commit()
-
     def set_default_values(self):
+        self.enabled = False
         self.pec_email = ""
         self.password = ""
         self.smtp_server = ""
@@ -49,7 +33,9 @@ class Pec(Base):
         self.imap_server = ""
         self.imap_port = ""
         self.retries = 5
-        self.enabled = False
 
         self.db.session.add(self)
-        self.db.session.commit()
+        self.commit()
+
+    def update(self, options):
+        self.update_by_id(options.get("id"), options)

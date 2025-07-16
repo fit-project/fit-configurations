@@ -7,7 +7,7 @@
 # -----
 ######
 
-from fit_configurations.model.tabs.packetcapture.packetcapture import (
+from fit_configurations.model.tabs.packet_capture.packetcapture import (
     PacketCapture as PacketCaptureModel,
 )
 

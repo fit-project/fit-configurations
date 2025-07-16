@@ -7,16 +7,11 @@
 # -----
 ######
 
-from fit_configurations.model.db import Db
-
 from sqlalchemy import Column, Integer, String, Boolean
-from sqlalchemy.orm import declarative_base
+from fit_configurations.model.tabs.tab import TabModel
 
 
-Base = declarative_base()
-
-
-class Timestamp(Base):
+class TimestampModel(TabModel):
     __tablename__ = "configuration_timestamp"
 
     id = Column(Integer, primary_key=True)
@@ -24,27 +19,13 @@ class Timestamp(Base):
     server_name = Column(String)
     cert_url = Column(String)
 
-    def __init__(self) -> None:
-        super().__init__()
-        self.db = Db()
-        self.metadata.create_all(self.db.engine)
-
-    def get(self):
-        if self.db.session.query(Timestamp).first() is None:
-            self.set_default_values()
-
-        return self.db.session.query(Timestamp).all()
-
-    def update(self, options):
-        self.db.session.query(Timestamp).filter(
-            Timestamp.id == options.get("id")
-        ).update(options)
-        self.db.session.commit()
-
     def set_default_values(self):
         self.enabled = True
         self.server_name = "https://freetsa.org/tsr"
         self.cert_url = "https://www.freetsa.org/files/tsa.crt"
 
         self.db.session.add(self)
-        self.db.session.commit()
+        self.commit()
+
+    def update(self, options):
+        self.update_by_id(options.get("id"), options)

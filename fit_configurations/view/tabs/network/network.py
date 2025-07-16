@@ -11,12 +11,8 @@
 from PySide6 import QtCore, QtWidgets
 from fit_configurations.view.tab import Tab
 
-from fit_configurations.controller.tabs.network.networktools import (
-    NetworkTools as NetworkToolsController,
-)
-from fit_configurations.controller.tabs.network.networkcheck import (
-    NetworkControllerCheck as NetworkCheckController,
-)
+from fit_configurations.controller.tabs.network.network_tool import NetworkToolController
+from fit_configurations.controller.tabs.network.network_check import NetworkCheckController
 
 from fit_common.core.utils import is_admin, is_npcap_installed, get_platform
 
@@ -27,7 +23,7 @@ class Network(Tab):
     def __init__(self, tab: QtWidgets.QWidget, name: str):
         super().__init__(tab, name)
 
-        self.__configuration_network_tools = NetworkToolsController().configuration
+        self.__configuration_network_tools = NetworkToolController().configuration
         self.__configuration_network_check = NetworkCheckController().configuration
 
         self.__init_ui()
@@ -121,5 +117,5 @@ class Network(Tab):
 
     def accept(self) -> None:
         self.__get_current_values()
-        NetworkToolsController().configuration = self.__configuration_network_tools
+        NetworkToolController().configuration = self.__configuration_network_tools
         NetworkCheckController().configuration = self.__configuration_network_check

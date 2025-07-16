@@ -7,7 +7,7 @@
 # -----
 ######
 
-from fit_configurations.model.tabs.screenrecorder.screenrecorder import (
+from fit_configurations.model.tabs.screen_recorder.screenrecorder import (
     ScreenRecorder as ScreenRecorderModel,
 )
 

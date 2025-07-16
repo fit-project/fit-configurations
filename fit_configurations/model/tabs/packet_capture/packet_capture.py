@@ -7,18 +7,21 @@
 # -----
 ######
 
-from sqlalchemy import Column, Integer, String
+from sqlalchemy import Column, Integer, String, Boolean
 from fit_configurations.model.tabs.tab import TabModel
 
 
-class LanguageModel(TabModel):
-    __tablename__ = "configuration_language"
+class PacketCaptureModel(TabModel):
+    __tablename__ = "configuration_packet_capture"
 
     id = Column(Integer, primary_key=True)
-    language = Column(String)
+    enabled = Column(Boolean)
+    filename = Column(String)
 
     def set_default_values(self):
-        self.language = "Italian"
+        self.enabled = True
+        self.filename = "acquisition.pcap"
+
         self.db.session.add(self)
         self.commit()
 

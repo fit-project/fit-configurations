@@ -11,7 +11,7 @@ import datetime
 import logging
 import os
 
-from fit_configurations.controller.tabs.network.networktools import (
+from fit_configurations.controller.tabs.network.network_tools import (
     NetworkTools as NetworkToolsController,
 )
 

@@ -1,23 +1,15 @@
-#!/usr/bin/env python3
-# -*- coding:utf-8 -*-
-######
-# -----
-# Copyright (c) 2023 FIT-Project
-# SPDX-License-Identifier: LGPL-3.0-or-later
-# -----
-######
+from fit_configurations.model.tabs.network.network_tool import NetworkToolModel
 
-from fit_configurations.model.tabs.language.language import LanguageModel
+
 from sqlalchemy.inspection import inspect
 
-
-class LanguageController:
+class NetworkToolController:
     _configuration = {}
 
     def __init__(self):
-        self.model = LanguageModel()
+        self.model = NetworkToolModel()
         self._configuration = self.model.get()
-    
+
     @property
     def configuration(self):
         instance = self._configuration[0]

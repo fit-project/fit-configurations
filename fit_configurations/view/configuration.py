@@ -168,6 +168,11 @@ class Configuration(QtWidgets.QDialog):
                 import_module(modname)
 
             if modname in sys.modules and not ispkg:
+                for x in dir(sys.modules[modname]):
+                    attr = getattr(sys.modules[modname], x)
+                    if isclass(attr) and getattr(attr, "__is_tab__", False):
+                        print(attr)
+
                 class_name = [
                     x
                     for x in dir(sys.modules[modname])
@@ -177,8 +182,8 @@ class Configuration(QtWidgets.QDialog):
                 ]
 
                 if class_name:
-
                     class_name = class_name[0]
+                    
                     ui_tab = self.loaded_ui.findChild(
                         QtWidgets.QWidget,
                         self.CLASS_TO_OBJECT_NAME.get(class_name.upper()),

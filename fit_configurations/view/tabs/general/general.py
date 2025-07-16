@@ -30,7 +30,7 @@ import os
 __is_tab__ = True
 
 
-class General(Tab):
+class GeneralView(Tab):
 
     def __init__(self, tab: QtWidgets.QWidget, name: str):
         super().__init__(tab, name)

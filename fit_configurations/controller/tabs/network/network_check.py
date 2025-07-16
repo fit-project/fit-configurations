@@ -7,14 +7,12 @@
 # -----
 ######
 
-from fit_configurations.model.tabs.network.networkcheck import (
-    NetworkCheck as NetworkCheckModel,
-)
+from fit_configurations.model.tabs.network.network_check import NetworkCheckModel
 
-import json
+from sqlalchemy.inspection import inspect
 
 
-class NetworkControllerCheck:
+class NetworkCheckController:
     _configuration = {}
 
     def __init__(self):
@@ -23,12 +21,10 @@ class NetworkControllerCheck:
 
     @property
     def configuration(self):
+        instance = self._configuration[0]
         return {
-            key: value
-            for key, value in self._configuration[0].__dict__.items()
-            if not key.startswith("_")
-            and not key.startswith("__")
-            and not key.startswith("db")
+            column.key: getattr(instance, column.key)
+            for column in inspect(instance).mapper.column_attrs
         }
 
     # a setter function
