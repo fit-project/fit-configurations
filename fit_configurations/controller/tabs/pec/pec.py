@@ -7,26 +7,11 @@
 # -----
 ######
 
+
+from fit_configurations.controller.tabs.tab import TabController
 from fit_configurations.model.tabs.pec.pec import Pec as PecModel
 
 
-class Pec:
+class PecController(TabController):
     def __init__(self):
-        self.model = PecModel()
-        self._options = self.model.get()
-        if self._options:
-            self._options = {
-                key: value
-                for key, value in self._options[0].__dict__.items()
-                if not key.startswith("_")
-                and not key.startswith("__")
-                and not key.startswith("db")
-            }
-
-    @property
-    def options(self):
-        return self._options
-
-    @options.setter
-    def options(self, options):
-        self.model.update(options)
+        super().__init__(PecModel)

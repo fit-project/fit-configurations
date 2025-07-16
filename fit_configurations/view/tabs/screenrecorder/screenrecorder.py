@@ -13,7 +13,7 @@ from fit_configurations.view.tab import Tab
 from fit_configurations.view.tabs.screenrecorder.audio_setting import AudioSetting
 
 
-from fit_configurations.controller.tabs.screenrecorder.screenrecorder import (
+from fit_configurations.controller.tabs.screen_recorder.screen_recorder import (
     ScreenRecorder as ScreenRecorderConfigurationController,
 )
 

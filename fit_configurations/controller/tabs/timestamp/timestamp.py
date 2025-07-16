@@ -7,28 +7,11 @@
 # -----
 ######
 
-from fit_configurations.model.tabs.timestamp.timestamp import (
-    Timestamp as TimestampModel,
-)
+
+from fit_configurations.controller.tabs.tab import TabController
+from fit_configurations.model.tabs.timestamp.timestamp import TimestampModel
 
 
-class Timestamp:
-    _options = {}
-
+class TimestampController(TabController):
     def __init__(self):
-        self.model = TimestampModel()
-        self._options = self.model.get()
-
-    @property
-    def options(self):
-        return {
-            key: value
-            for key, value in self._options[0].__dict__.items()
-            if not key.startswith("_")
-            and not key.startswith("__")
-            and not key.startswith("db")
-        }
-
-    @options.setter
-    def options(self, options):
-        self.model.update(options)
+        super().__init__(TimestampModel)

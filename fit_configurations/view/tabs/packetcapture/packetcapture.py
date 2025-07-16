@@ -10,7 +10,7 @@
 from PySide6 import QtCore, QtWidgets
 from fit_configurations.view.tab import Tab
 
-from fit_configurations.controller.tabs.packetcapture.packetcapture import (
+from fit_configurations.controller.tabs.packet_capture.packet_capture import (
     PacketCapture as PacketCaptureController,
 )
 

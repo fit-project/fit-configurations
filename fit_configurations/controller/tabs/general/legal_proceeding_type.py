@@ -1,54 +1,34 @@
 #!/usr/bin/env python3
 # -*- coding:utf-8 -*-
 ######
-# -----
 # Copyright (c) 2023 FIT-Project
 # SPDX-License-Identifier: LGPL-3.0-or-later
-# -----
 ######
 
+from sqlalchemy import inspect
+
+from fit_configurations.controller.tabs.tab import TabController
 from fit_configurations.model.tabs.general.legal_proceeding_type import LegalProceedingTypeModel
 
 
-class LegalProceedingTypeController:
-    _proceedings = []
-    _names = []
-
+class LegalProceedingTypeController(TabController):
     def __init__(self):
-        self.model = LegalProceedingTypeModel()
+        super().__init__(LegalProceedingTypeModel)
+        self._proceedings = self._serialize(self._configuration)
+        self._names = [p["name"] for p in self._proceedings]
 
-        _proceedings = self.model.get()
-
-        if not len(self._proceedings):
-            for i in range(len(_proceedings)):
-                self._proceedings.append(
-                    {
-                        key: value
-                        for key, value in _proceedings[i].__dict__.items()
-                        if not key.startswith("_")
-                        and not key.startswith("__")
-                        and not key.startswith("db")
-                    }
-                )
-                self._names.append(
-                    {
-                        key: value
-                        for key, value in _proceedings[i].__dict__.items()
-                        if key == "name"
-                    }
-                )
+    def _serialize(self, rows):
+        return [
+            {
+                column.key: getattr(row, column.key)
+                for column in inspect(row).mapper.column_attrs
+            }
+            for row in rows
+        ]
 
     def get_proceeding_name_by_id(self, id):
-        name = next(
-            (proceeding for proceeding in self._proceedings if proceeding["id"] == id),
-            None,
-        )
-        if name is not None:
-            name = name.get("name")
-        else:
-            name = "N/A"
-
-        return name
+        match = next((p for p in self._proceedings if p["id"] == id), None)
+        return match["name"] if match else "N/A"
 
     @property
     def proceedings(self):
@@ -56,27 +36,17 @@ class LegalProceedingTypeController:
 
     @property
     def names(self):
-        return list(map(lambda x: x["name"], self._names))
+        return self._names
 
     @names.setter
     def names(self, names):
-        names_to_delete = [
-            item
-            for item in list(map(lambda x: x["name"], self._names))
-            if item not in names
-        ]
+        existing_names = self._names
+
+        names_to_delete = [p["id"] for p in self._proceedings if p["name"] not in names]
+        names_to_add = [name for name in names if name not in existing_names]
+
         if names_to_delete:
-            ids = []
-            for proceedings in self._proceedings:
-                if proceedings["name"] in names_to_delete:
-                    ids.append(proceedings["id"])
+            self.model.delete_by_ids(names_to_delete)
 
-            self.model.delete(ids)
-
-        names_to_add = [
-            item
-            for item in names
-            if item not in list(map(lambda x: x["name"], self._names))
-        ]
         if names_to_add:
             self.model.add(names_to_add)

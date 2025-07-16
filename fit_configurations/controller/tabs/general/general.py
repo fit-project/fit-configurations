@@ -7,27 +7,10 @@
 # -----
 ######
 
+from fit_configurations.controller.tabs.tab import TabController
 from fit_configurations.model.tabs.general.general import GeneralModel
-from sqlalchemy.inspection import inspect
 
 
-
-class GeneralController:
-    _configuration = {}
-
+class GeneralController(TabController):
     def __init__(self):
-        self.model = GeneralModel()
-        self._configuration = self.model.get()
-
-    @property
-    def configuration(self):
-        instance = self._configuration[0]
-        return {
-            column.key: getattr(instance, column.key)
-            for column in inspect(instance).mapper.column_attrs
-        }
-
-    # a setter function
-    @configuration.setter
-    def configuration(self, configuration):
-        self.model.update(configuration)
+        super().__init__(GeneralModel)
