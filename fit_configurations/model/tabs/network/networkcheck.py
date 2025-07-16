@@ -11,7 +11,8 @@ from fit_configurations.model.db import Db
 
 import json
 from sqlalchemy import Column, Integer, String, Boolean
-from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import declarative_base
+
 
 Base = declarative_base()
 

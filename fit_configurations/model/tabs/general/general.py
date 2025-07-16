@@ -13,7 +13,8 @@ from fit_common.core.utils import get_platform
 
 from fit_configurations.lang import load_translations
 from sqlalchemy import Column, Integer, String
-from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import declarative_base
+
 
 Base = declarative_base()
 

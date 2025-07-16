@@ -19,8 +19,6 @@ from importlib.resources import files
 
 
 import fit_configurations.view.tabs as tabs
-from fit_configurations.view import classname2objectname
-
 from fit_common.core.utils import get_version
 
 from fit_configurations.lang import load_translations
@@ -30,6 +28,16 @@ from fit_assets import resources
 
 
 class Configuration(QtWidgets.QDialog):
+    CLASS_TO_OBJECT_NAME = {
+        "PACKETCAPTURE": "packet_capture",
+        "SCREENRECORDER": "screen_recorder",
+        "PEC": "pec",
+        "NETWORK": "network",
+        "LANGUAGE": "language",
+        "TIMESTAMP": "timestamp",
+        "GENERAL": "general",
+    }
+
     def __init__(self, parent=None):
         super(Configuration, self).__init__(parent)
         self.translations = load_translations()
@@ -173,7 +181,7 @@ class Configuration(QtWidgets.QDialog):
                     class_name = class_name[0]
                     ui_tab = self.loaded_ui.findChild(
                         QtWidgets.QWidget,
-                        classname2objectname.__dict__.get(class_name.upper()),
+                        self.CLASS_TO_OBJECT_NAME.get(class_name.upper()),
                     )
 
                     if ui_tab:
