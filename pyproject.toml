@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "fit-configurations"
-version = "1.0.10"
+version = "1.0.11"
 description = "This module provides the graphical interface for configuring settings used by the FIT application."
 authors = ["FIT Project"]
 license = "LGPL-3.0-or-later"

@@ -16,7 +16,7 @@ from fit_configurations.controller.tabs.language.language import (
 
 def get_language():
     controller = LanguageController()
-    return controller.options["language"]
+    return controller.configuration["language"]
 
 
 def show_configuration_dialog():
