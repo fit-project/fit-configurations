@@ -7,8 +7,9 @@
 # -----
 ######
 
-from sqlalchemy import Column, Integer, String
 from fit_common.core.utils import get_platform
+from sqlalchemy import Column, Integer, String
+
 from fit_configurations.model.tabs.tab import TabModel
 
 
@@ -30,7 +31,7 @@ class GeneralModel(TabModel):
         }
 
         self.cases_folder_path = default_path_by_os[get_platform()]
-        self.home_page_url = "https://www.google.it"
+        self.home_page_url = "https://fit-project.org/"
         self.user_agent = self.translations["DEFAULT_USER_AGENT"]
         self.language = "english"
 
