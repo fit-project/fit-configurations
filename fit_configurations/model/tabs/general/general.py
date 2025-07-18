@@ -31,7 +31,7 @@ class GeneralModel(TabModel):
         }
 
         self.cases_folder_path = default_path_by_os[get_platform()]
-        self.home_page_url = "http://fit-project.org/"
+        self.home_page_url = "https://github.com/fit-project"
         self.user_agent = self.translations["DEFAULT_USER_AGENT"]
         self.language = "english"
 
