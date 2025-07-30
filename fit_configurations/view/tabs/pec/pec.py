@@ -8,16 +8,16 @@
 import imaplib
 import smtplib
 
-from PySide6 import QtWidgets
-from PySide6.QtGui import QPixmap, QIntValidator
-from PySide6.QtWidgets import QMessageBox
-
-from fit_configurations.view.tabs.tab import TabView
-from fit_configurations.controller.tabs.pec.pec import PecController
-from fit_common.core.utils import resolve_path
-from fit_configurations.lang import load_translations
+from fit_common.core import resolve_path
 from fit_common.gui.clickable_label import ClickableLabel as ClickableLabelView
 from fit_common.gui.error import Error as ErrorView
+from PySide6 import QtWidgets
+from PySide6.QtGui import QIntValidator, QPixmap
+from PySide6.QtWidgets import QMessageBox
+
+from fit_configurations.controller.tabs.pec.pec import PecController
+from fit_configurations.lang import load_translations
+from fit_configurations.view.tabs.tab import TabView
 
 
 class PecView(TabView):
@@ -38,14 +38,20 @@ class PecView(TabView):
         self.pec_settings = self.find(QtWidgets.QFrame, "pec_settings")
         self.pec_email = self.find(QtWidgets.QLineEdit, "pec_email")
         self.pec_password = self.find(QtWidgets.QLineEdit, "pec_password")
-        self.retries_eml_download = self.find(QtWidgets.QLineEdit, "retries_eml_download")
+        self.retries_eml_download = self.find(
+            QtWidgets.QLineEdit, "retries_eml_download"
+        )
         self.imap_server = self.find(QtWidgets.QLineEdit, "pec_imap_server")
         self.imap_port = self.find(QtWidgets.QLineEdit, "pec_imap_server_port")
         self.smtp_server = self.find(QtWidgets.QLineEdit, "pec_smtp_server")
         self.smtp_port = self.find(QtWidgets.QLineEdit, "pec_smtp_server_port")
-        self.verification_imap_button = self.find(QtWidgets.QPushButton, "verification_imap_button")
+        self.verification_imap_button = self.find(
+            QtWidgets.QPushButton, "verification_imap_button"
+        )
         self.info_imap_img = self.find(QtWidgets.QLabel, "info_imap_img_label")
-        self.verification_smtp_button = self.find(QtWidgets.QPushButton, "verification_smtp_button")
+        self.verification_smtp_button = self.find(
+            QtWidgets.QPushButton, "verification_smtp_button"
+        )
         self.info_smtp_img = self.find(QtWidgets.QLabel, "info_smtp_img_label")
 
         self.pec_password.setEchoMode(QtWidgets.QLineEdit.EchoMode.Password)
@@ -98,12 +104,18 @@ class PecView(TabView):
     def _verify_imap(self):
         self.info_imap_img.setVisible(False)
         try:
-            server = imaplib.IMAP4_SSL(self.imap_server.text(), int(self.imap_port.text()))
+            server = imaplib.IMAP4_SSL(
+                self.imap_server.text(), int(self.imap_port.text())
+            )
             server.login(self.pec_email.text(), self.pec_password.text())
             server.logout()
-            self.info_imap_img.setPixmap(QPixmap(resolve_path("ui/icons/green-mark.png")).scaled(20, 20))
+            self.info_imap_img.setPixmap(
+                QPixmap(resolve_path("ui/icons/green-mark.png")).scaled(20, 20)
+            )
         except Exception as e:
-            self.info_imap_img.setPixmap(QPixmap(resolve_path("ui/icons/red-mark.png")).scaled(20, 20))
+            self.info_imap_img.setPixmap(
+                QPixmap(resolve_path("ui/icons/red-mark.png")).scaled(20, 20)
+            )
             self._show_error(str(e))
         finally:
             self.info_imap_img.setVisible(True)
@@ -111,12 +123,18 @@ class PecView(TabView):
     def _verify_smtp(self):
         self.info_smtp_img.setVisible(False)
         try:
-            server = smtplib.SMTP_SSL(self.smtp_server.text(), int(self.smtp_port.text()))
+            server = smtplib.SMTP_SSL(
+                self.smtp_server.text(), int(self.smtp_port.text())
+            )
             server.login(self.pec_email.text(), self.pec_password.text())
             server.quit()
-            self.info_smtp_img.setPixmap(QPixmap(resolve_path("ui/icons/green-mark.png")).scaled(20, 20))
+            self.info_smtp_img.setPixmap(
+                QPixmap(resolve_path("ui/icons/green-mark.png")).scaled(20, 20)
+            )
         except Exception as e:
-            self.info_smtp_img.setPixmap(QPixmap(resolve_path("ui/icons/red-mark.png")).scaled(20, 20))
+            self.info_smtp_img.setPixmap(
+                QPixmap(resolve_path("ui/icons/red-mark.png")).scaled(20, 20)
+            )
             self._show_error(str(e))
         finally:
             self.info_smtp_img.setVisible(True)

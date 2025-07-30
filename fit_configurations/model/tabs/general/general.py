@@ -7,7 +7,7 @@
 # -----
 ######
 
-from fit_common.core.utils import get_platform
+from fit_common.core import get_platform
 from sqlalchemy import Column, Integer, String
 
 from fit_configurations.model.tabs.tab import TabModel

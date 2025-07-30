@@ -7,24 +7,20 @@
 # -----
 #######
 
-import sys
 import pkgutil
-from inspect import isclass
+import sys
 from importlib import import_module
-
-from PySide6 import QtCore, QtWidgets
-from PySide6.QtUiTools import QUiLoader
-from PySide6.QtCore import QFile
 from importlib.resources import files
+from inspect import isclass
 
+from fit_assets import resources  # noqa: F401
+from fit_common.core import get_version
+from PySide6 import QtCore, QtWidgets
+from PySide6.QtCore import QFile
+from PySide6.QtUiTools import QUiLoader
 
 import fit_configurations.view.tabs as tabs
-from fit_common.core.utils import get_version
-
 from fit_configurations.lang import load_translations
-
-
-from fit_assets import resources
 
 
 class Configuration(QtWidgets.QDialog):
@@ -168,11 +164,10 @@ class Configuration(QtWidgets.QDialog):
                 if isclass(obj) and getattr(obj, "__is_tab__", False):
                     ui_name = name.replace("View", "").lower()
                     ui_tab = self.loaded_ui.findChild(QtWidgets.QWidget, ui_name)
-                    
+
                     if ui_tab:
                         tab_instance = obj(ui_tab, self.translations[ui_name.upper()])
                         self.__tabs.append(tab_instance)
-
 
     def accept(self):
         for tab in self.__tabs:

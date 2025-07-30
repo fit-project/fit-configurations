@@ -7,18 +7,25 @@
 # -----
 ######
 
+from fit_common.core import get_platform, is_admin, is_npcap_installed
 from PySide6 import QtWidgets
+
+from fit_configurations.controller.tabs.packet_capture.packet_capture import (
+    PacketCaptureController,
+)
 from fit_configurations.view.tabs.tab import TabView
-from fit_configurations.controller.tabs.packet_capture.packet_capture import PacketCaptureController
-from fit_common.core.utils import is_admin, is_npcap_installed, get_platform
 
 
 class PacketCaptureView(TabView):
     controller_class = PacketCaptureController
 
     def init_ui(self):
-        self.enable_checkbox: QtWidgets.QCheckBox = self.find(QtWidgets.QCheckBox, "enable_packet_capture_recorder")
-        self.filename_input: QtWidgets.QLineEdit = self.find(QtWidgets.QLineEdit, "packet_capture_recorder_filename")
+        self.enable_checkbox: QtWidgets.QCheckBox = self.find(
+            QtWidgets.QCheckBox, "enable_packet_capture_recorder"
+        )
+        self.filename_input: QtWidgets.QLineEdit = self.find(
+            QtWidgets.QLineEdit, "packet_capture_recorder_filename"
+        )
 
         self.enable_checkbox.stateChanged.connect(self._on_enable_checkbox_changed)
 

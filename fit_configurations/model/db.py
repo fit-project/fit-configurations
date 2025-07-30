@@ -7,10 +7,9 @@
 # -----
 ######
 
+from fit_common.core import resolve_db_path
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from fit_common.core.utils import resolve_db_path
-import sys, os
 
 
 class Db:

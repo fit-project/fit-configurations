@@ -5,12 +5,16 @@
 # SPDX-License-Identifier: LGPL-3.0-or-later
 ######
 
+from fit_common.core import get_platform, is_admin, is_npcap_installed
 from PySide6 import QtCore, QtWidgets
 
+from fit_configurations.controller.tabs.network.network_check import (
+    NetworkCheckController,
+)
+from fit_configurations.controller.tabs.network.network_tool import (
+    NetworkToolController,
+)
 from fit_configurations.view.tabs.tab import TabView
-from fit_configurations.controller.tabs.network.network_tool import NetworkToolController
-from fit_configurations.controller.tabs.network.network_check import NetworkCheckController
-from fit_common.core.utils import is_admin, is_npcap_installed, get_platform
 
 
 class NetworkView(TabView):
@@ -52,7 +56,9 @@ class NetworkView(TabView):
         enabled = self._tool_config["traceroute"]
         if enabled and is_admin() and get_platform() != "win":
             enabled = True
-        elif enabled and is_admin() and get_platform() == "win" and is_npcap_installed():
+        elif (
+            enabled and is_admin() and get_platform() == "win" and is_npcap_installed()
+        ):
             enabled = True
         else:
             enabled = False
