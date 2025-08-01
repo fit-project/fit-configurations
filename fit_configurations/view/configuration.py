@@ -14,7 +14,7 @@ from importlib.resources import files
 from inspect import isclass
 
 from fit_assets import resources  # noqa: F401
-from fit_common.core import get_local_version
+from fit_common.core import get_version
 from PySide6 import QtCore, QtWidgets
 from PySide6.QtCore import QFile
 from PySide6.QtUiTools import QUiLoader
@@ -63,7 +63,7 @@ class Configuration(QtWidgets.QDialog):
         self.close_button.clicked.connect(self.close)
 
         self.version = self.loaded_ui.findChild(QtWidgets.QLabel, "version_label")
-        self.version.setText(get_local_version())
+        self.version.setText(get_version())
 
         self.cancel_button = self.loaded_ui.findChild(
             QtWidgets.QPushButton, "cancel_button"

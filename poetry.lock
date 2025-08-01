@@ -170,7 +170,7 @@ windows-tools = {version = "^2.5.0", markers = "sys_platform == \"win32\""}
 type = "git"
 url = "https://github.com/fit-project/fit-common.git"
 reference = "main"
-resolved_reference = "df42d1850fafd2026815c5a6190c4c1b18df267e"
+resolved_reference = "76f8869cc173a2c72709ce430d98e8f569c960ae"
 
 [[package]]
 name = "greenlet"
