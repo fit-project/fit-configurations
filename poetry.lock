@@ -132,7 +132,7 @@ psutil = ">=5.6.0"
 
 [[package]]
 name = "fit-assets"
-version = "0.1.15"
+version = "0.1.17"
 description = "Assets (icons, images, resources) for the FIT project"
 optional = false
 python-versions = ">=3.9,<3.13"
@@ -147,7 +147,7 @@ PySide6 = "6.9.0"
 type = "git"
 url = "https://github.com/fit-project/fit-assets.git"
 reference = "main"
-resolved_reference = "7401955a08b66164f49342f9b53a54389c50b1c3"
+resolved_reference = "f824f97b0fb4b0d6b5b96e427a38d57d914b5b8b"
 
 [[package]]
 name = "fit-common"
@@ -170,7 +170,7 @@ windows-tools = {version = "^2.5.0", markers = "sys_platform == \"win32\""}
 type = "git"
 url = "https://github.com/fit-project/fit-common.git"
 reference = "main"
-resolved_reference = "1fed6b46f23cf8543870c86fec2c6e65a1e9adbf"
+resolved_reference = "df42d1850fafd2026815c5a6190c4c1b18df267e"
 
 [[package]]
 name = "greenlet"
