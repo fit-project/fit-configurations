@@ -17,8 +17,8 @@ python = ">=3.11,<3.13"
 PySide6 = "6.9.0"
 sqlalchemy = "^2.0.40"
 
-fit-common = {git = "https://github.com/fit-project/fit-common.git", branch = "refactor/core/pdf-report-builder"}
-fit-assets = {git = "https://github.com/fit-project/fit-assets.git", branch = "3-align-all-report-templates-into-two-macro-templates-fronthtml-and-contenthtml"}
+fit-common = {git = "https://github.com/fit-project/fit-common.git", rev = "main"}
+fit-assets = {git = "https://github.com/fit-project/fit-assets.git", rev = "main"}
 
 
 [build-system]

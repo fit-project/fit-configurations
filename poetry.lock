@@ -389,8 +389,8 @@ PySide6 = "6.9.0"
 [package.source]
 type = "git"
 url = "https://github.com/fit-project/fit-assets.git"
-reference = "3-align-all-report-templates-into-two-macro-templates-fronthtml-and-contenthtml"
-resolved_reference = "64a7257c55ab6e01d7fab04e87319b328a017d30"
+reference = "main"
+resolved_reference = "097c8a1f0c0e99768d709335476dc183120ff38b"
 
 [[package]]
 name = "fit-common"
@@ -415,8 +415,8 @@ xhtml2pdf = "^0.2.17"
 [package.source]
 type = "git"
 url = "https://github.com/fit-project/fit-common.git"
-reference = "refactor/core/pdf-report-builder"
-resolved_reference = "2254e78731cb90627306a95d02059d567fd40329"
+reference = "main"
+resolved_reference = "08dd28e15cb5397b541d8afc44db15c61d2c11eb"
 
 [[package]]
 name = "freetype-py"
@@ -1961,4 +1961,4 @@ test = ["coverage (>=5.3)", "tomli (>=2.0.1) ; python_version < \"3.11\"", "tox"
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.11,<3.13"
-content-hash = "57ee0da1645e1978e10c6cc139a1c024b13cd9f2d7223017ce0364750a14d43c"
+content-hash = "d6ca49c170648092a458f591b0dd063a918ceb8a56c0a6b2c6586d38f5019534"
