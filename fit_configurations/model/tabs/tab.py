@@ -8,12 +8,13 @@
 ######
 
 
-
 from sqlalchemy.orm import declarative_base
-from fit_configurations.model.db import Db
+
 from fit_configurations.lang import load_translations
+from fit_configurations.model.db import Db
 
 Base = declarative_base()
+
 
 class TabModel(Base):
     __abstract__ = True
@@ -36,7 +37,9 @@ class TabModel(Base):
         self.commit()
 
     def delete_by_ids(self, ids):
-        self.db.session.query(self.__class__).filter(self.__class__.id.in_(ids)).delete(synchronize_session=False)
+        self.db.session.query(self.__class__).filter(self.__class__.id.in_(ids)).delete(
+            synchronize_session=False
+        )
         self.commit()
 
     def get_all(self):
@@ -49,4 +52,3 @@ class TabModel(Base):
 
     def set_default_values(self):
         pass
-
