@@ -11,7 +11,7 @@ import smtplib
 from fit_common.core import resolve_path
 from fit_common.gui.clickable_label import ClickableLabel as ClickableLabelView
 from fit_common.gui.error import Error as ErrorView
-from PySide6 import QtWidgets
+from PySide6 import QtCore, QtWidgets
 from PySide6.QtGui import QIntValidator, QPixmap
 from PySide6.QtWidgets import QMessageBox
 
@@ -20,8 +20,12 @@ from fit_configurations.lang import load_translations
 from fit_configurations.view.tabs.tab import TabView
 
 
-class PecView(TabView):
+class PecView(TabView, QtCore.QObject):
     controller_class = PecController
+
+    def __init__(self, tab: QtWidgets.QWidget, name: str):
+        QtCore.QObject.__init__(self)
+        super().__init__(tab, name)
 
     def init_ui(self):
         self.translations = load_translations()
@@ -59,13 +63,13 @@ class PecView(TabView):
         self.imap_port.setValidator(QIntValidator(0, 65535))
         self.smtp_port.setValidator(QIntValidator(0, 65535))
 
-        self.enable_pec.stateChanged.connect(self._toggle_pec_settings)
-        self.pec_email.textEdited.connect(self._sanitize_input)
-        self.imap_server.textEdited.connect(self._sanitize_input)
-        self.smtp_server.textEdited.connect(self._sanitize_input)
+        self.enable_pec.stateChanged.connect(self.__toggle_pec_settings)
+        self.pec_email.textEdited.connect(self.__sanitize_input)
+        self.imap_server.textEdited.connect(self.__sanitize_input)
+        self.smtp_server.textEdited.connect(self.__sanitize_input)
 
-        self.verification_imap_button.clicked.connect(self._verify_imap)
-        self.verification_smtp_button.clicked.connect(self._verify_smtp)
+        self.verification_imap_button.clicked.connect(self.__verify_imap)
+        self.verification_smtp_button.clicked.connect(self.__verify_smtp)
 
         self.info_imap_img.setVisible(False)
         self.info_smtp_img.setVisible(False)
@@ -80,10 +84,11 @@ class PecView(TabView):
         self.imap_port.setText(data.get("imap_port", ""))
         self.retries_eml_download.setText(str(data.get("retries", "0")))
 
-        self._toggle_pec_settings()
+        self.__toggle_pec_settings()
 
     def collect_form_data(self):
         return {
+            "id": self._configuration["id"],
             "enabled": self.enable_pec.isChecked(),
             "pec_email": self.pec_email.text(),
             "password": self.pec_password.text(),
@@ -94,14 +99,14 @@ class PecView(TabView):
             "retries": int(self.retries_eml_download.text() or "0"),
         }
 
-    def _toggle_pec_settings(self):
+    def __toggle_pec_settings(self):
         self.pec_settings.setEnabled(self.enable_pec.isChecked())
 
-    def _sanitize_input(self, text):
-        sender = self.tab.sender()
+    def __sanitize_input(self, text):
+        sender = self.sender()
         sender.setText(text.replace(" ", ""))
 
-    def _verify_imap(self):
+    def __verify_imap(self):
         self.info_imap_img.setVisible(False)
         try:
             server = imaplib.IMAP4_SSL(
@@ -116,11 +121,11 @@ class PecView(TabView):
             self.info_imap_img.setPixmap(
                 QPixmap(resolve_path("ui/icons/red-mark.png")).scaled(20, 20)
             )
-            self._show_error(str(e))
+            self.__show_error(str(e))
         finally:
             self.info_imap_img.setVisible(True)
 
-    def _verify_smtp(self):
+    def __verify_smtp(self):
         self.info_smtp_img.setVisible(False)
         try:
             server = smtplib.SMTP_SSL(
@@ -135,11 +140,11 @@ class PecView(TabView):
             self.info_smtp_img.setPixmap(
                 QPixmap(resolve_path("ui/icons/red-mark.png")).scaled(20, 20)
             )
-            self._show_error(str(e))
+            self.__show_error(str(e))
         finally:
             self.info_smtp_img.setVisible(True)
 
-    def _show_error(self, message):
+    def __show_error(self, message):
         ErrorView(
             QMessageBox.Icon.Critical,
             self.translations["LOGIN_FAILED"],

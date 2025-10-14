@@ -49,6 +49,7 @@ class PacketCaptureView(TabView):
 
     def collect_form_data(self):
         return {
+            "id": self._configuration["id"],
             "enabled": self.enable_checkbox.isChecked(),
             "filename": self.filename_input.text().strip(),
         }

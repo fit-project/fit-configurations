@@ -93,6 +93,7 @@ class ScreenRecorderView(TabView):
 
     def collect_form_data(self):
         return {
+            "id": self._configuration["id"],
             "enabled": self.enable_screen_recorder.isChecked(),
             "filename": self.screen_recorder_filename.text().strip(),
         }

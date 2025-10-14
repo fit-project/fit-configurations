@@ -9,6 +9,7 @@
 
 from PySide6 import QtWidgets
 
+
 class TabView:
     __is_tab__ = True
     controller_class = None
@@ -23,7 +24,6 @@ class TabView:
         else:
             self.controller = None
             self._configuration = {}
-
 
         self.init_ui()
         self.set_form_data(self._configuration)
@@ -47,4 +47,3 @@ class TabView:
 
     def set_form_data(self, data):
         pass
-
