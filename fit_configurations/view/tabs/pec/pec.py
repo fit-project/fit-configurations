@@ -8,7 +8,6 @@
 import imaplib
 import smtplib
 
-from fit_common.core import resolve_path
 from fit_common.gui.clickable_label import ClickableLabel as ClickableLabelView
 from fit_common.gui.error import Error as ErrorView
 from PySide6 import QtCore, QtWidgets
@@ -115,11 +114,11 @@ class PecView(TabView, QtCore.QObject):
             server.login(self.pec_email.text(), self.pec_password.text())
             server.logout()
             self.info_imap_img.setPixmap(
-                QPixmap(resolve_path("ui/icons/green-mark.png")).scaled(20, 20)
+                QPixmap(":icons/icons/green-mark.png").scaled(20, 20)
             )
         except Exception as e:
             self.info_imap_img.setPixmap(
-                QPixmap(resolve_path("ui/icons/red-mark.png")).scaled(20, 20)
+                QPixmap(":icons/icons/red-mark.png").scaled(20, 20)
             )
             self.__show_error(str(e))
         finally:
@@ -134,11 +133,11 @@ class PecView(TabView, QtCore.QObject):
             server.login(self.pec_email.text(), self.pec_password.text())
             server.quit()
             self.info_smtp_img.setPixmap(
-                QPixmap(resolve_path("ui/icons/green-mark.png")).scaled(20, 20)
+                QPixmap(":icons/icons/green-mark.png").scaled(20, 20)
             )
         except Exception as e:
             self.info_smtp_img.setPixmap(
-                QPixmap(resolve_path("ui/icons/red-mark.png")).scaled(20, 20)
+                QPixmap(":icons/icons/red-mark.png").scaled(20, 20)
             )
             self.__show_error(str(e))
         finally:
