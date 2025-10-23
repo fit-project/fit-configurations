@@ -7,8 +7,6 @@
 # -----
 #######
 
-import pkgutil
-import sys
 from importlib import import_module
 from inspect import isclass
 
@@ -16,9 +14,9 @@ from fit_assets import resources  # noqa: F401
 from fit_common.core import get_version
 from PySide6 import QtCore, QtWidgets
 
-import fit_configurations.view.tabs as tabs
 from fit_configurations.lang import load_translations
 from fit_configurations.view.configuration_ui import Ui_fit_configuration
+from fit_configurations.view.tabs import TAB_MODULES
 
 
 class Configuration(QtWidgets.QDialog):
@@ -119,28 +117,23 @@ class Configuration(QtWidgets.QDialog):
             event.accept()
 
     def __load_tabs(self):
-        package = tabs
-
-        for _, modname, ispkg in pkgutil.walk_packages(
-            path=package.__path__,
-            prefix=package.__name__ + ".",
-            onerror=lambda x: None,
-        ):
-            if ispkg:
+        for modname in TAB_MODULES:
+            try:
+                module = import_module(modname)
+            except Exception:
                 continue
 
-            if modname not in sys.modules:
-                import_module(modname)
-
-            module = sys.modules[modname]
             for name in dir(module):
                 obj = getattr(module, name)
                 if isclass(obj) and getattr(obj, "__is_tab__", False):
                     ui_name = name.replace("View", "").lower()
                     ui_tab = getattr(self.ui, ui_name, None)
-                    if ui_tab:
-                        tab_instance = obj(ui_tab, self.translations[ui_name.upper()])
-                        self.__tabs.append(tab_instance)
+                    if not ui_tab:
+                        continue
+                    tab_instance = obj(
+                        ui_tab, self.translations.get(ui_name.upper(), {})
+                    )
+                    self.__tabs.append(tab_instance)
 
     def accept(self):
         for tab in self.__tabs:

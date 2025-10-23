@@ -19,6 +19,7 @@ sqlalchemy = "^2.0.40"
 
 fit-common = {git = "https://github.com/fit-project/fit-common.git", rev = "main"}
 fit-assets = {git = "https://github.com/fit-project/fit-assets.git", rev = "main"}
+pyinstaller = "^6.16.0"
 
 
 [build-system]
