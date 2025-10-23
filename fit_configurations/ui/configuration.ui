@@ -2757,7 +2757,7 @@ QPushButton::disabled {background-color: rgb(52, 59, 72); color: rgba(255, 255, 
                  </widget>
                 </item>
                 <item>
-                 <widget class="QLabel" name="version_label">
+                 <widget class="QLabel" name="version">
                   <property name="text">
                    <string>v1.0.3</string>
                   </property>

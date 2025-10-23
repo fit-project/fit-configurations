@@ -10,17 +10,15 @@
 import pkgutil
 import sys
 from importlib import import_module
-from importlib.resources import files
 from inspect import isclass
 
 from fit_assets import resources  # noqa: F401
 from fit_common.core import get_version
 from PySide6 import QtCore, QtWidgets
-from PySide6.QtCore import QFile
-from PySide6.QtUiTools import QUiLoader
 
 import fit_configurations.view.tabs as tabs
 from fit_configurations.lang import load_translations
+from fit_configurations.view.configuration_ui import Ui_fit_configuration
 
 
 class Configuration(QtWidgets.QDialog):
@@ -32,65 +30,41 @@ class Configuration(QtWidgets.QDialog):
         self.__init_ui()
 
     def __init_ui(self):
-        loader = QUiLoader()
-        ui_path = files("fit_configurations.ui").joinpath("configuration.ui")
-        ui_file = QFile(str(ui_path))
-        ui_file.open(QFile.ReadOnly)
-        self.loaded_ui = loader.load(ui_file, self)
-        ui_file.close()
-
-        layout = QtWidgets.QVBoxLayout(self)
-        layout.setContentsMargins(0, 0, 0, 0)
-        layout.addWidget(self.loaded_ui)
-        self.setLayout(layout)
+        self.ui = Ui_fit_configuration()
+        self.ui.setupUi(self)
 
         # HIDE STANDARD TITLE BAR
         self.setWindowFlags(QtCore.Qt.FramelessWindowHint)
         self.setAttribute(QtCore.Qt.WA_TranslucentBackground)
 
         # CUSTOM TOP BAR
-        self.left_box = self.loaded_ui.findChild(QtWidgets.QWidget, "left_box")
-        self.left_box.mouseMoveEvent = self.move_window
+        self.ui.left_box.mouseMoveEvent = self.move_window
 
-        self.minimize_button = self.loaded_ui.findChild(
-            QtWidgets.QPushButton, "minimize_button"
-        )
-        self.minimize_button.clicked.connect(self.showMinimized)
+        # MINIMIZE BUTTON
+        self.ui.minimize_button.clicked.connect(self.showMinimized)
 
-        self.close_button = self.loaded_ui.findChild(
-            QtWidgets.QPushButton, "close_button"
-        )
-        self.close_button.clicked.connect(self.close)
+        # CLOSE BUTTON
+        self.ui.close_button.clicked.connect(self.close)
 
-        self.version = self.loaded_ui.findChild(QtWidgets.QLabel, "version_label")
-        self.version.setText(get_version())
+        self.ui.version.setText(f"v{get_version()}")
 
-        self.cancel_button = self.loaded_ui.findChild(
-            QtWidgets.QPushButton, "cancel_button"
-        )
-        self.cancel_button.clicked.connect(self.reject)
+        self.ui.cancel_button.clicked.connect(self.reject)
 
-        self.save_button = self.loaded_ui.findChild(
-            QtWidgets.QPushButton, "save_button"
-        )
-        self.save_button.clicked.connect(self.accept)
-
-        self.menu_tabs = self.loaded_ui.findChild(QtWidgets.QTreeWidget, "menu_tabs")
-        self.tabs = self.loaded_ui.findChild(QtWidgets.QStackedWidget, "tabs")
+        self.ui.save_button.clicked.connect(self.accept)
 
         self.__translate_ui()
 
         self.__load_tabs()
         for tab in self.__tabs:
-            self.menu_tabs.addTopLevelItem(QtWidgets.QTreeWidgetItem([tab.name]))
+            self.ui.menu_tabs.addTopLevelItem(QtWidgets.QTreeWidgetItem([tab.name]))
 
-        if self.menu_tabs.topLevelItemCount() > 0:
-            self.tabs.setCurrentIndex(0)
-            self.menu_tabs.topLevelItem(0).setSelected(True)
-            self.menu_tabs.itemClicked.connect(self.__on_tab_clicked)
+        if self.ui.menu_tabs.topLevelItemCount() > 0:
+            self.ui.tabs.setCurrentIndex(0)
+            self.ui.menu_tabs.topLevelItem(0).setSelected(True)
+            self.ui.menu_tabs.itemClicked.connect(self.__on_tab_clicked)
 
     def __translate_ui(self):
-        self.__traverse_widgets(self.loaded_ui)
+        self.__traverse_widgets(self)
 
     def __traverse_widgets(self, widget: QtWidgets.QWidget):
         self.__apply_translation(widget)
@@ -133,7 +107,7 @@ class Configuration(QtWidgets.QDialog):
                 widget.setPlaceholderText(value)
 
     def __on_tab_clicked(self, item, column):
-        self.tabs.setCurrentIndex(self.menu_tabs.indexOfTopLevelItem(item))
+        self.ui.tabs.setCurrentIndex(self.ui.menu_tabs.indexOfTopLevelItem(item))
 
     def mousePressEvent(self, event):
         self.dragPos = event.globalPosition().toPoint()
@@ -163,8 +137,7 @@ class Configuration(QtWidgets.QDialog):
                 obj = getattr(module, name)
                 if isclass(obj) and getattr(obj, "__is_tab__", False):
                     ui_name = name.replace("View", "").lower()
-                    ui_tab = self.loaded_ui.findChild(QtWidgets.QWidget, ui_name)
-
+                    ui_tab = getattr(self.ui, ui_name, None)
                     if ui_tab:
                         tab_instance = obj(ui_tab, self.translations[ui_name.upper()])
                         self.__tabs.append(tab_instance)
