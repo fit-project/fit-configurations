@@ -387,10 +387,10 @@ test = ["pytest", "ruff"]
 
 [[package]]
 name = "fit-assets"
-version = "0.1.17"
+version = "1.0.0"
 description = "Assets (icons, images, resources) for the FIT project"
 optional = false
-python-versions = ">=3.11,<3.13"
+python-versions = ">=3.11,<3.14"
 groups = ["main"]
 files = []
 develop = false
@@ -401,15 +401,15 @@ PySide6 = "6.9.0"
 [package.source]
 type = "git"
 url = "https://github.com/fit-project/fit-assets.git"
-reference = "main"
-resolved_reference = "097c8a1f0c0e99768d709335476dc183120ff38b"
+reference = "chore/update-python-compatibility-3.13"
+resolved_reference = "a907de7f0260f98d943c765bd80a88dda9eac6fc"
 
 [[package]]
 name = "fit-common"
-version = "0.1.20"
+version = "1.0.0"
 description = "Shared code between modules of the FIT project"
 optional = false
-python-versions = ">=3.11,<3.13"
+python-versions = ">=3.11,<3.14"
 groups = ["main"]
 files = []
 develop = false
@@ -427,8 +427,8 @@ xhtml2pdf = "^0.2.17"
 [package.source]
 type = "git"
 url = "https://github.com/fit-project/fit-common.git"
-reference = "main"
-resolved_reference = "e5756d6319fbc4d867c3ab10561345bb705b3cad"
+reference = "chore/update-python-compatibility-3.13"
+resolved_reference = "abf0ad9e9cd9b155e394ed44360d0471ec9d9f25"
 
 [[package]]
 name = "freetype-py"
@@ -2066,5 +2066,5 @@ test = ["coverage (>=5.3)", "tomli (>=2.0.1) ; python_version < \"3.11\"", "tox"
 
 [metadata]
 lock-version = "2.1"
-python-versions = ">=3.11,<3.13"
-content-hash = "33c6e4460ae16a7d808215423a45fb6e6b1487bdde4e5336db5bc54a8440430d"
+python-versions = ">=3.11,<3.14"
+content-hash = "0494e7073263cddcf4a0a075bcef50923b56bb7715a88e2ed09c69e92fd49ffe"
