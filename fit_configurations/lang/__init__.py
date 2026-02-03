@@ -1,19 +1,9 @@
-import locale
 import json
 from pathlib import Path
 
+from fit_common.core import DEFAULT_LANG, get_system_lang
+
 LANG_DIR = Path(__file__).parent
-DEFAULT_LANG = "en"
-
-
-def get_system_lang():
-    try:
-        locale.setlocale(locale.LC_ALL, "")
-    except locale.Error:
-        pass
-
-    lang, _ = locale.getlocale()
-    return (lang or DEFAULT_LANG).split("_")[0]
 
 
 def load_translations(lang=None):
