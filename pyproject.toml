@@ -5,7 +5,6 @@ description = "This module provides the graphical interface for configuring sett
 authors = ["FIT Project"]
 license = "LGPL-3.0-or-later"
 packages = [{ include = "fit_configurations" }]
-exclude = ["fit_configurations/ui/**"]
 
 include = [
     "fit_configurations/ui/configuration.ui"
