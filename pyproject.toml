@@ -6,9 +6,7 @@ authors = ["FIT Project"]
 license = "LGPL-3.0-or-later"
 packages = [{ include = "fit_configurations" }]
 
-include = [
-    "fit_configurations/ui/configuration.ui"
-]
+exclude = ["fit_configurations/ui/**"]
 
 [tool.poetry.dependencies]
 python = ">=3.11,<3.14"
