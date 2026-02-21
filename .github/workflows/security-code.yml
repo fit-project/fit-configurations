@@ -11,6 +11,7 @@ on:
       - "fit_configurations/**"
       - "pyproject.toml"
       - "poetry.lock"
+      - ".github/actions/setup-fit-env/**"
       - ".github/workflows/security-code.yml"
   pull_request:
     branches:
@@ -19,6 +20,7 @@ on:
       - "fit_configurations/**"
       - "pyproject.toml"
       - "poetry.lock"
+      - ".github/actions/setup-fit-env/**"
       - ".github/workflows/security-code.yml"
 
 concurrency:
@@ -34,20 +36,12 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Setup Python
-        uses: actions/setup-python@v5
+      - name: Setup environment
+        uses: ./.github/actions/setup-fit-env
         with:
           python-version: "3.11"
-
-      - name: Install system dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y libcairo2-dev pkg-config
-
-      - name: Install package and bandit
-        run: |
-          python -m pip install --upgrade pip
-          pip install . bandit[toml]
+          system-packages: "libcairo2-dev pkg-config"
+          python-packages: "bandit[toml]"
 
       - name: Run bandit
         run: |
