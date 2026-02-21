@@ -7,9 +7,27 @@ on:
   push:
     branches:
       - main
+    paths:
+      - "fit_configurations/**"
+      - "tests/contract/**"
+      - "tests/conftest.py"
+      - "pyproject.toml"
+      - "poetry.lock"
+      - ".github/workflows/contract-tests.yml"
   pull_request:
     branches:
       - main
+    paths:
+      - "fit_configurations/**"
+      - "tests/contract/**"
+      - "tests/conftest.py"
+      - "pyproject.toml"
+      - "poetry.lock"
+      - ".github/workflows/contract-tests.yml"
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   contract-tests:

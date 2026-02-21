@@ -7,9 +7,27 @@ on:
   push:
     branches:
       - main
+    paths:
+      - "fit_configurations/**"
+      - "tests/integration/**"
+      - "tests/conftest.py"
+      - "pyproject.toml"
+      - "poetry.lock"
+      - ".github/workflows/integration-tests.yml"
   pull_request:
     branches:
       - main
+    paths:
+      - "fit_configurations/**"
+      - "tests/integration/**"
+      - "tests/conftest.py"
+      - "pyproject.toml"
+      - "poetry.lock"
+      - ".github/workflows/integration-tests.yml"
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   integration-tests:

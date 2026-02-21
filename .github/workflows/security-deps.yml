@@ -7,9 +7,21 @@ on:
   push:
     branches:
       - main
+    paths:
+      - "pyproject.toml"
+      - "poetry.lock"
+      - ".github/workflows/security-deps.yml"
   pull_request:
     branches:
       - main
+    paths:
+      - "pyproject.toml"
+      - "poetry.lock"
+      - ".github/workflows/security-deps.yml"
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   pip-audit:
