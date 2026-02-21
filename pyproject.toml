@@ -13,8 +13,8 @@ python = ">=3.11,<3.14"
 PySide6 = "6.9.0"
 sqlalchemy = "^2.0.40"
 
-fit-common = {git = "https://github.com/fit-project/fit-common.git", tag = "v1.0.0-rc1"}
-fit-assets = {git = "https://github.com/fit-project/fit-assets.git", tag = "v1.0.0-rc1"}
+fit-common = {git = "https://github.com/fit-project/fit-common.git", tag = "v1.0.0-rc2"}
+fit-assets = {git = "https://github.com/fit-project/fit-assets.git", tag = "v1.0.0-rc2"}
 
 
 [build-system]
@@ -24,6 +24,7 @@ build-backend = "poetry.core.masonry.api"
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 addopts = "--strict-markers"
+pythonpath = ["."]
 markers = [
   "unit: fast isolated tests",
   "contract: interface and behavior contracts",
@@ -42,5 +43,7 @@ module = [
   "fit_common.*",
   "fit_assets",
   "fit_assets.*",
+  "sqlalchemy",
+  "sqlalchemy.*",
 ]
 ignore_missing_imports = true
