@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import gc
 import sys
 from pathlib import Path
 
@@ -34,7 +35,13 @@ def qapp() -> QtWidgets.QApplication:
     app = QtWidgets.QApplication.instance()
     if app is None:
         app = QtWidgets.QApplication([])
-    return app
+    yield app
+    # Explicit Qt teardown reduces sporadic crashes at interpreter shutdown in CI.
+    app.closeAllWindows()
+    app.processEvents()
+    app.quit()
+    app.processEvents()
+    gc.collect()
 
 
 @pytest.fixture
