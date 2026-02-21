@@ -13,11 +13,34 @@ python = ">=3.11,<3.14"
 PySide6 = "6.9.0"
 sqlalchemy = "^2.0.40"
 
-fit-common = {git = "https://github.com/fit-project/fit-common.git", rev = "main"}
-fit-assets = {git = "https://github.com/fit-project/fit-assets.git", rev = "main"}
-pyinstaller = "^6.16.0"
+fit-common = {git = "https://github.com/fit-project/fit-common.git", tag = "v1.0.0-rc1"}
+fit-assets = {git = "https://github.com/fit-project/fit-assets.git", tag = "v1.0.0-rc1"}
 
 
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "--strict-markers"
+markers = [
+  "unit: fast isolated tests",
+  "contract: interface and behavior contracts",
+  "integration: tests that exercise multiple components together",
+  "e2e: end-to-end UI workflow tests",
+]
+
+[tool.mypy]
+python_version = "3.11"
+warn_unused_configs = true
+disable_error_code = ["import-untyped"]
+
+[[tool.mypy.overrides]]
+module = [
+  "fit_common",
+  "fit_common.*",
+  "fit_assets",
+  "fit_assets.*",
+]
+ignore_missing_imports = true
