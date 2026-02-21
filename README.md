@@ -62,7 +62,8 @@ pytest -m e2e -q tests
 ruff check fit_configurations tests
 mypy fit_configurations
 bandit -c pyproject.toml -r fit_configurations -q -ll -ii
-pip-audit --progress-spinner off
+PIPAPI_PYTHON_LOCATION="$(python -c 'import sys; print(sys.executable)')" \
+  python -m pip_audit --progress-spinner off
 ```
 
 Note: `pip-audit` may print a skip message for `fit-common` and `fit-assets`  because it is a local package and not published on PyPI.
