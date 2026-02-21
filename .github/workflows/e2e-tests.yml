@@ -52,4 +52,16 @@ jobs:
 
       - name: Run e2e tests
         run: |
-          python -m pytest -m e2e -q tests/e2e
+          set +e
+          python -m pytest -m e2e -q tests/e2e --junitxml=e2e-results.xml
+          rc=$?
+          set -e
+
+          if [ "$rc" -eq 139 ]; then
+            if grep -q 'failures="0"' e2e-results.xml && grep -q 'errors="0"' e2e-results.xml; then
+              echo "Ignoring known PySide6 shutdown segfault after successful E2E assertions (exit 139)."
+              exit 0
+            fi
+          fi
+
+          exit "$rc"
