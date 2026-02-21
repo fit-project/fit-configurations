@@ -12,7 +12,6 @@ from fit_common.gui.clickable_label import ClickableLabel as ClickableLabelView
 from fit_common.gui.ui_translation import translate_ui
 from PySide6 import QtCore, QtWidgets
 from PySide6.QtGui import QPixmap
-from PySide6.QtMultimedia import QMediaDevices
 
 from fit_configurations.lang import load_translations
 from fit_configurations.view.tabs.screen_recorder.audio_setting_ui import (
@@ -85,8 +84,18 @@ class AudioSetting(QtWidgets.QDialog):
     def is_installed_ffmpeg(self):
         return is_cmd("ffmpeg")
 
+    def _media_devices(self):
+        try:
+            from PySide6.QtMultimedia import QMediaDevices
+        except ImportError:
+            return None
+        return QMediaDevices()
+
     def get_vb_cable_virtual_audio_device(self):
-        for dev in QMediaDevices().audioInputs():
+        devices = self._media_devices()
+        if devices is None:
+            return None
+        for dev in devices.audioInputs():
             if any(
                 x in dev.description()
                 for x in ["Virtual Cable", "CABLE Output", "VB-Audio", "VB-Cable"]
@@ -95,7 +104,10 @@ class AudioSetting(QtWidgets.QDialog):
         return None
 
     def is_vb_cable_first_ouput_audio_device(self):
-        for idx, dev in enumerate(QMediaDevices().audioOutputs()):
+        devices = self._media_devices()
+        if devices is None:
+            return False
+        for idx, dev in enumerate(devices.audioOutputs()):
             if any(
                 x in dev.description()
                 for x in ["Virtual Cable", "CABLE Output", "VB-Audio", "VB-Cable"]

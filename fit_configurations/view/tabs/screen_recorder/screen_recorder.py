@@ -13,17 +13,16 @@ from PySide6 import QtWidgets
 from fit_configurations.controller.tabs.screen_recorder.screen_recorder import (
     ScreenRecorderController,
 )
-from fit_configurations.view.tabs.screen_recorder.audio_setting import AudioSetting
 from fit_configurations.view.tabs.tab import TabView
+
+# Backward-compatible patch point for tests. If left as None, AudioSetting is imported lazily.
+AudioSetting = None
 
 
 class ScreenRecorderView(TabView):
     controller_class = ScreenRecorderController
 
     def init_ui(self):
-        self.audio_setting = AudioSetting()
-        self.audio_setting.accepted.connect(self._enable_audio_recording)
-
         # Widget
         self.enable_screen_recorder = self.find(
             QtWidgets.QCheckBox, "enable_screen_recorder"
@@ -39,6 +38,9 @@ class ScreenRecorderView(TabView):
             QtWidgets.QPushButton, "verify_audio_setting_button"
         )
         self.temporary_msg = self.find(QtWidgets.QLabel, "temporary_msg_label")
+        self.audio_setting = self._build_audio_setting()
+        if self.audio_setting is not None:
+            self.audio_setting.accepted.connect(self._enable_audio_recording)
 
         # Setup iniziale
         if get_platform() in ("lin", "other"):
@@ -55,10 +57,34 @@ class ScreenRecorderView(TabView):
         )
         self.verify_audio_setting.clicked.connect(self._show_audio_setting)
 
+    def _resolve_audio_setting_class(self):
+        if AudioSetting is not None:
+            return AudioSetting
+        from fit_configurations.view.tabs.screen_recorder.audio_setting import (
+            AudioSetting as AudioSettingView,
+        )
+
+        return AudioSettingView
+
+    def _build_audio_setting(self):
+        try:
+            audio_setting_class = self._resolve_audio_setting_class()
+            return audio_setting_class()
+        except Exception:
+            return None
+
     def _show_audio_setting(self):
+        if self.audio_setting is None:
+            return
         self.audio_setting.exec()
 
     def _enable_audio_recording(self):
+        if self.audio_setting is None:
+            self.verify_audio_setting.setEnabled(False)
+            self.enable_audio_recording.setEnabled(False)
+            self.enable_audio_recording.setChecked(False)
+            self.temporary_msg.setVisible(False)
+            return
         if (
             self.enable_screen_recorder.isChecked()
             and self.audio_setting.enable_audio_recording()
