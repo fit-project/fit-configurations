@@ -36,7 +36,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 20
     env:
-      QT_QPA_PLATFORM: xcb
+      QT_QPA_PLATFORM: offscreen
       PYTHONDONTWRITEBYTECODE: "1"
 
     steps:
@@ -47,9 +47,9 @@ jobs:
         uses: ./.github/actions/setup-fit-env
         with:
           python-version: "3.11"
-          system-packages: "libcairo2-dev pkg-config libegl1 libgl1 libpulse0 xvfb libxkbcommon-x11-0 libxcb-icccm4 libxcb-image0 libxcb-keysyms1 libxcb-randr0 libxcb-render-util0 libxcb-xinerama0 libxcb-xfixes0 libxcb-cursor0"
+          system-packages: "libcairo2-dev pkg-config libegl1 libgl1 libpulse0"
           python-packages: "pytest"
 
       - name: Run contract tests
         run: |
-          xvfb-run -a python -m pytest -m contract -q tests/contract
+          python -m pytest -m contract -q tests/contract
