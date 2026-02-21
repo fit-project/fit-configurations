@@ -7,11 +7,11 @@
 # -----
 #######
 
-from fit_configurations.view.configuration import Configuration
 
 from fit_configurations.controller.tabs.language.language import (
     LanguageController as LanguageController,
 )
+from fit_configurations.view.configuration import Configuration
 
 
 def get_language():
