@@ -3,6 +3,7 @@ from __future__ import annotations
 import pytest
 from PySide6 import QtWidgets
 
+# Test
 from fit_configurations.view.configuration import Configuration
 
 
@@ -115,10 +116,12 @@ def test_configuration_e2e_cross_tab_save_persists_combined_state(
         ],
     )
     monkeypatch.setattr(
-        "fit_configurations.view.tabs.packet_capture.packet_capture.is_admin", lambda: True
+        "fit_configurations.view.tabs.packet_capture.packet_capture.is_admin",
+        lambda: True,
     )
     monkeypatch.setattr(
-        "fit_configurations.view.tabs.packet_capture.packet_capture.get_platform", lambda: "lin"
+        "fit_configurations.view.tabs.packet_capture.packet_capture.get_platform",
+        lambda: "lin",
     )
 
     dialog = Configuration()
