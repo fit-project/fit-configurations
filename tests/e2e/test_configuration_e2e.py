@@ -3,7 +3,6 @@ from __future__ import annotations
 import pytest
 from PySide6 import QtWidgets
 
-# Test
 from fit_configurations.view.configuration import Configuration
 
 
