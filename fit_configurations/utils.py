@@ -7,7 +7,7 @@
 # -----
 #######
 
-# test
+
 from fit_configurations.controller.tabs.language.language import (
     LanguageController as LanguageController,
 )

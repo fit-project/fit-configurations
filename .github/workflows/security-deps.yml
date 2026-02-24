@@ -4,14 +4,6 @@
 name: Security dependencies audit
 
 on:
-  push:
-    branches:
-      - main
-    paths:
-      - "pyproject.toml"
-      - "poetry.lock"
-      - ".github/actions/setup-fit-env/**"
-      - ".github/workflows/security-deps.yml"
   pull_request:
     branches:
       - main

@@ -4,15 +4,6 @@
 name: Security code scan
 
 on:
-  push:
-    branches:
-      - main
-    paths:
-      - "fit_configurations/**"
-      - "pyproject.toml"
-      - "poetry.lock"
-      - ".github/actions/setup-fit-env/**"
-      - ".github/workflows/security-code.yml"
   pull_request:
     branches:
       - main

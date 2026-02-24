@@ -4,16 +4,6 @@
 name: Lint
 
 on:
-  push:
-    branches:
-      - main
-    paths:
-      - "fit_configurations/**"
-      - "tests/**"
-      - "pyproject.toml"
-      - "poetry.lock"
-      - ".github/actions/setup-fit-env/**"
-      - ".github/workflows/lint.yml"
   pull_request:
     branches:
       - main
