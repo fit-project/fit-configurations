@@ -26,7 +26,7 @@ See `pyproject.toml` for full details.
 Run these commands before opening a PR, so failures are caught locally first.
 
 ### What each tool does
-- `pytest`: runs automated tests (`unit`, `contract`, and `integration` suites).
+- `pytest`: runs automated tests (`unit`, `contract`, `integration` and `e2e` suites).
 - `ruff`: checks code style and common static issues (lint).
 - `mypy`: performs static type checking on annotated Python code.
 - `bandit`: scans source code for common security anti-patterns.
@@ -38,6 +38,7 @@ python3 -m venv .venv
 source .venv/bin/activate
 python -m pip install -U pip
 pip install . pytest ruff mypy "bandit[toml]" pip-audit
+python -m pip install --upgrade "setuptools>=78.1.1"
 ```
 
 ### 2) Test suite
@@ -50,7 +51,7 @@ pytest -m unit -q tests
 # contract tests
 pytest -m contract -q tests
 
-# integration tests (requires fit-assets package)
+# integration tests
 pytest -m integration -q tests
 
 # end-to-end smoke tests
@@ -59,9 +60,9 @@ pytest -m e2e -q tests
 
 ### 3) Quality and security checks
 ```bash
-ruff check fit_configurations tests
-mypy fit_configurations
-bandit -c pyproject.toml -r fit_configurations -q -ll -ii
+ruff check fit_acquisition tests
+mypy fit_acquisition
+bandit -c pyproject.toml -r fit_acquisition -q -ll -ii
 PIPAPI_PYTHON_LOCATION="$(python -c 'import sys; print(sys.executable)')" \
   python -m pip_audit --progress-spinner off
 ```
@@ -81,3 +82,11 @@ Note: `pip-audit` may print a skip message for `fit-common` and `fit-assets`  be
     poetry install
     poetry run python main.py
 ```
+
+---
+
+## Contributing
+1. Fork this repository.  
+2. Create a new branch (`git checkout -b feat/my-feature`).  
+3. Commit your changes using [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/).  
+4. Submit a Pull Request describing your modification.
