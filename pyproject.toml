@@ -13,7 +13,7 @@ python = ">=3.11,<3.14"
 PySide6 = "6.9.0"
 sqlalchemy = "^2.0.40"
 
-fit-common = {git = "https://github.com/fit-project/fit-common.git", branch = "feat/ffmpeg-utils"}
+fit-common = {git = "https://github.com/fit-project/fit-common.git", branch = "main"}
 fit-assets = {git = "https://github.com/fit-project/fit-assets.git", tag = "v1.0.0-rc2"}
 
 
