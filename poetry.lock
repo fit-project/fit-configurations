@@ -389,7 +389,7 @@ resolved_reference = "41c79f7cac046356867ed5198d053ac86d053c56"
 
 [[package]]
 name = "fit-common"
-version = "1.0.0rc1"
+version = "1.0.0rc2"
 description = "Shared code between modules of the FIT project"
 optional = false
 python-versions = ">=3.11,<3.14"
@@ -412,8 +412,8 @@ xhtml2pdf = "^0.2.17"
 [package.source]
 type = "git"
 url = "https://github.com/fit-project/fit-common.git"
-reference = "v1.0.0-rc2"
-resolved_reference = "46cb34d7e63f059e3672267956dc2c350a5ae63c"
+reference = "feat/ffmpeg-utils"
+resolved_reference = "888b1581405234752203e65d98fb52a81b51d52b"
 
 [[package]]
 name = "freetype-py"
@@ -1960,4 +1960,4 @@ test = ["coverage (>=5.3)", "tomli (>=2.0.1) ; python_version < \"3.11\"", "tox"
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.11,<3.14"
-content-hash = "c494799070b3bf3860a0901a42706ebe5e20e25e55d807b937f7ac05c3362549"
+content-hash = "4e5cca765ff7f95169bcbcbc6ebaf2b2b4ed926687c00c94a3731a8015d05ef6"
