@@ -12,8 +12,6 @@ Main dependencies are:
 
 - **Python** >=3.11,<3.14
 - **Poetry** (recommended for development)
-- [`PySide6`](https://pypi.org/project/PySide6/) 6.9.0
-- [`SQLAlchemy`](https://pypi.org/project/SQLAlchemy/) ^2.0.40
 - [`fit-common`](https://github.com/fit-project/fit-common)  – shared utility and core logic
 - [`fit-assets`](https://github.com/fit-project/fit-assets)  – UI resources and assets
 
