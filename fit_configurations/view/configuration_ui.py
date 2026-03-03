@@ -1107,7 +1107,6 @@ class Ui_fit_configuration(object):
         self.enable_audio_recording = QtWidgets.QCheckBox(
             parent=self.audio_recording_box
         )
-        self.enable_audio_recording.setEnabled(False)
         self.enable_audio_recording.setObjectName("enable_audio_recording")
         self.audio_recording_layout.addWidget(self.enable_audio_recording)
         spacerItem9 = QtWidgets.QSpacerItem(
@@ -1117,22 +1116,6 @@ class Ui_fit_configuration(object):
             QtWidgets.QSizePolicy.Policy.Minimum,
         )
         self.audio_recording_layout.addItem(spacerItem9)
-        self.verify_audio_setting_button = QtWidgets.QPushButton(
-            parent=self.audio_recording_box
-        )
-        self.verify_audio_setting_button.setEnabled(True)
-        self.verify_audio_setting_button.setMinimumSize(QtCore.QSize(150, 30))
-        self.verify_audio_setting_button.setCursor(
-            QtGui.QCursor(QtCore.Qt.CursorShape.PointingHandCursor)
-        )
-        self.verify_audio_setting_button.setStyleSheet(
-            "QPushButton {\n"
-            "    background-color: rgb(52, 59, 72);\n"
-            "}\n"
-            "QPushButton::disabled {background-color: rgb(52, 59, 72); color: rgba(255, 255, 255, 10%) }"
-        )
-        self.verify_audio_setting_button.setObjectName("verify_audio_setting_button")
-        self.audio_recording_layout.addWidget(self.verify_audio_setting_button)
         spacerItem10 = QtWidgets.QSpacerItem(
             40,
             20,
@@ -1141,17 +1124,6 @@ class Ui_fit_configuration(object):
         )
         self.audio_recording_layout.addItem(spacerItem10)
         self.verticalLayout_5.addWidget(self.audio_recording_box)
-        self.temporary_msg_label = QtWidgets.QLabel(
-            parent=self.screen_recorder_configuration
-        )
-        self.temporary_msg_label.setAlignment(
-            QtCore.Qt.AlignmentFlag.AlignLeading
-            | QtCore.Qt.AlignmentFlag.AlignLeft
-            | QtCore.Qt.AlignmentFlag.AlignVCenter
-        )
-        self.temporary_msg_label.setWordWrap(True)
-        self.temporary_msg_label.setObjectName("temporary_msg_label")
-        self.verticalLayout_5.addWidget(self.temporary_msg_label)
         self.screen_recorder_configuration_box.addLayout(self.verticalLayout_5)
         self.screen_recorder_filename = QtWidgets.QLineEdit(
             parent=self.screen_recorder_configuration
@@ -1467,15 +1439,6 @@ class Ui_fit_configuration(object):
         )
         self.enable_audio_recording.setText(
             _translate("fit_configuration", "Enable audio recording")
-        )
-        self.verify_audio_setting_button.setText(
-            _translate("fit_configuration", "Verify Audio Setting")
-        )
-        self.temporary_msg_label.setText(
-            _translate(
-                "fit_configuration",
-                '<html><head/><body><p><span style=" font-weight:600; text-decoration: underline; color:#fc0107;">Enable audio recording is temporary information and will not be saved, so once you quit from FIT it will be lost.</span><span style=" color:#fc0107;"/></p></body></html>',
-            )
         )
         self.screen_recorder_filename.setPlaceholderText(
             _translate("fit_configuration", "filename.avi")

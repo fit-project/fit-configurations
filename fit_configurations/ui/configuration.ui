@@ -2280,10 +2280,7 @@ QPushButton:disabled {background-color: rgb(52, 59, 72); color: rgba(255, 255, 2
                                 <number>0</number>
                                </property>
                                <item>
-                                <widget class="QCheckBox" name="enable_audio_recording">
-                                 <property name="enabled">
-                                  <bool>false</bool>
-                                 </property>
+                               <widget class="QCheckBox" name="enable_audio_recording">
                                  <property name="text">
                                   <string>Enable audio recording</string>
                                  </property>
@@ -2306,31 +2303,6 @@ QPushButton:disabled {background-color: rgb(52, 59, 72); color: rgba(255, 255, 2
                                 </spacer>
                                </item>
                                <item>
-                                <widget class="QPushButton" name="verify_audio_setting_button">
-                                 <property name="enabled">
-                                  <bool>true</bool>
-                                 </property>
-                                 <property name="minimumSize">
-                                  <size>
-                                   <width>150</width>
-                                   <height>30</height>
-                                  </size>
-                                 </property>
-                                 <property name="cursor">
-                                  <cursorShape>PointingHandCursor</cursorShape>
-                                 </property>
-                                 <property name="styleSheet">
-                                  <string notr="true">QPushButton {
-	background-color: rgb(52, 59, 72);
-}
-QPushButton::disabled {background-color: rgb(52, 59, 72); color: rgba(255, 255, 255, 10%) }</string>
-                                 </property>
-                                 <property name="text">
-                                  <string>Verify Audio Setting</string>
-                                 </property>
-                                </widget>
-                               </item>
-                               <item>
                                 <spacer name="horizontalSpacer_2">
                                  <property name="orientation">
                                   <enum>Qt::Horizontal</enum>
@@ -2349,23 +2321,7 @@ QPushButton::disabled {background-color: rgb(52, 59, 72); color: rgba(255, 255, 
                               </layout>
                              </widget>
                             </item>
-                            <item>
-                             <widget class="QLabel" name="temporary_msg_label">
-                              <property name="text">
-                               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; text-decoration: underline; color:#fc0107;&quot;&gt;Enable audio recording is temporary information and will not be saved, so once you quit from FIT it will be lost.&lt;/span&gt;&lt;span style=&quot; color:#fc0107;&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-                              </property>
-                              <property name="alignment">
-                               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-                              </property>
-                              <property name="wordWrap">
-                               <bool>true</bool>
-                              </property>
-                              <property name="margin">
-                               <number>0</number>
-                              </property>
-                             </widget>
-                            </item>
-                           </layout>
+                          </layout>
                           </item>
                           <item>
                            <widget class="QLineEdit" name="screen_recorder_filename">

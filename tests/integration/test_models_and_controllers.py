@@ -74,7 +74,8 @@ def test_model_defaults_for_all_tabs(sqlite_db_path, monkeypatch: pytest.MonkeyP
     assert pec_row.retries == 5
 
     recorder_row = ScreenRecorderModel().get_first_or_default()[0]
-    assert recorder_row.enabled is True
+    assert recorder_row.enabled_video is True
+    assert recorder_row.enabled_audio is False
     assert recorder_row.filename == "acquisition_video"
 
     timestamp_row = TimestampModel().get_first_or_default()[0]

@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import pytest
-from PySide6 import QtCore, QtWidgets
+from PySide6 import QtWidgets
 
 from fit_configurations.view.configuration import Configuration
 
@@ -134,22 +134,6 @@ def test_pec_e2e_save_and_reload(
     assert reloaded.ui.retries_eml_download.text() == "4"
 
 
-class _FakeAudioSetting(QtCore.QObject):
-    accepted = QtCore.Signal()
-
-    def __init__(self) -> None:
-        super().__init__()
-        self.exec_calls = 0
-
-    def exec(self) -> int:
-        self.exec_calls += 1
-        self.accepted.emit()
-        return 0
-
-    def enable_audio_recording(self):
-        return True
-
-
 @pytest.mark.e2e
 def test_screen_recorder_e2e_save_and_reload(
     qapp: QtWidgets.QApplication,
@@ -165,18 +149,14 @@ def test_screen_recorder_e2e_save_and_reload(
         "fit_configurations.view.tabs.screen_recorder.screen_recorder.get_platform",
         lambda: "macos",
     )
-    monkeypatch.setattr(
-        "fit_configurations.view.tabs.screen_recorder.screen_recorder.AudioSetting",
-        _FakeAudioSetting,
-    )
 
     dialog = Configuration()
     dialog.ui.enable_screen_recorder.setChecked(True)
-    dialog.ui.verify_audio_setting_button.click()
     dialog.ui.enable_audio_recording.setChecked(True)
     dialog.ui.screen_recorder_filename.setText("e2e-video.avi")
     dialog.ui.save_button.click()
 
     reloaded = Configuration()
     assert reloaded.ui.enable_screen_recorder.isChecked() is True
+    assert reloaded.ui.enable_audio_recording.isChecked() is True
     assert reloaded.ui.screen_recorder_filename.text() == "e2e-video.avi"
