@@ -53,7 +53,7 @@ def test_screen_recorder_view_flow(
         lambda: "macos",
     )
 
-    view = ScreenRecorderView(_build_screen_tab(), "Screen")
+    view = ScreenRecorderView(tab=_build_screen_tab(), name="Screen")
 
     assert view.enable_screen_recorder.isChecked() is True
     assert view.screen_recorder_filename.isEnabled() is True

@@ -159,7 +159,7 @@ def test_language_view_collects_current_language(
         lambda: {"ITALIAN": "Italian", "ENGLISH": "English", "REPORT_LANGUAGE": "Report language"},
     )
 
-    view = LanguageView(_build_language_tab(), "Language")
+    view = LanguageView(tab=_build_language_tab(), name="Language")
     view.report_language.setCurrentText("English")
     view.accept()
 
@@ -184,7 +184,7 @@ def test_packet_capture_view_applies_admin_rules_and_collects_data(
         "fit_configurations.view.tabs.packet_capture.packet_capture.get_platform", lambda: "lin"
     )
 
-    view = PacketCaptureView(_build_packet_capture_tab(), "Packet")
+    view = PacketCaptureView(tab=_build_packet_capture_tab(), name="Packet")
 
     assert view.enable_checkbox.isEnabled() is False
     assert view.filename_input.isEnabled() is False
@@ -219,7 +219,7 @@ def test_timestamp_view_toggle_and_collect(
 
     monkeypatch.setattr(TimestampView, "controller_class", FakeTimestampController)
 
-    view = TimestampView(_build_timestamp_tab(), "Timestamp")
+    view = TimestampView(tab=_build_timestamp_tab(), name="Timestamp")
     assert view.timestamp_settings.isEnabled() is False
 
     view.enable_timestamp.setChecked(True)
@@ -253,7 +253,7 @@ def test_network_view_collect_and_accept(
     monkeypatch.setattr("fit_configurations.view.tabs.network.network.is_admin", lambda: True)
     monkeypatch.setattr("fit_configurations.view.tabs.network.network.get_platform", lambda: "lin")
 
-    view = NetworkView(_build_network_tab(), "Network")
+    view = NetworkView(tab=_build_network_tab(), name="Network")
 
     view.whois.setChecked(False)
     view.nslookup_dns_server.setText("9.9.9.9")
@@ -323,7 +323,7 @@ def test_pec_view_collect_and_verify_error_paths(
     monkeypatch.setattr("fit_configurations.view.tabs.pec.pec.imaplib.IMAP4_SSL", fail_imap)
     monkeypatch.setattr("fit_configurations.view.tabs.pec.pec.smtplib.SMTP_SSL", fail_smtp)
 
-    view = PecView(_build_pec_tab(), "PEC")
+    view = PecView(tab=_build_pec_tab(), name="PEC")
 
     assert view.pec_settings.isEnabled() is True
 

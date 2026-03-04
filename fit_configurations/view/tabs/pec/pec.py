@@ -26,7 +26,7 @@ class PecView(TabView, QtCore.QObject):
     def __init__(
         self,
         acquisition_type: AcquisitionType | None = None,
-        tab: QtWidgets.QWidget = None,
+        tab: QtWidgets.QWidget | None = None,
         name: str = "",
     ):
         QtCore.QObject.__init__(self)

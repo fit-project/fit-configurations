@@ -23,7 +23,7 @@ class NetworkView(TabView):
     def __init__(
         self,
         acquisition_type: AcquisitionType | None = None,
-        tab: QtWidgets.QWidget = None,
+        tab: QtWidgets.QWidget | None = None,
         name: str = "",
     ):
         self.tool_controller = NetworkToolController()

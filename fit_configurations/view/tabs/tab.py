@@ -22,11 +22,10 @@ class TabView:
     def __init__(
         self,
         acquisition_type: AcquisitionType | None = None,
-        tab: QtWidgets.QWidget = None,
+        tab: QtWidgets.QWidget | None = None,
         name: str = "",
     ):
-
-        self.tab = tab
+        self.tab: QtWidgets.QWidget | None = tab
         self.name = name
         self.controller: Any | None
         self.__acquisition_type = acquisition_type
@@ -54,6 +53,8 @@ class TabView:
         pass
 
     def find(self, widget_type: type[Any], name: str) -> Any:
+        if self.tab is None:
+            raise RuntimeError("Tab widget is not set")
         return self.tab.findChild(widget_type, name)
 
     def accept(self) -> None:

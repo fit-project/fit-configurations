@@ -17,6 +17,7 @@ from PySide6 import QtCore, QtWidgets
 
 from fit_configurations.lang import load_translations
 from fit_configurations.view.configuration_ui import Ui_fit_configuration
+from fit_configurations.view.tabs.tab import TabView
 from fit_configurations.view.tabs import TAB_MODULES
 
 NON_WEB_SKIPPED_TABS = {
@@ -32,7 +33,7 @@ class Configuration(QtWidgets.QDialog):
 
         self.__acquisition_type = acquisition_type
 
-        self.__tabs = []
+        self.__tabs: list[TabView] = []
         self.__init_ui()
 
     def __init_ui(self):

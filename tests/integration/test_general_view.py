@@ -116,7 +116,7 @@ def test_general_view_collects_and_applies_form_data(
     )
 
     tab = _build_general_tab_widget()
-    view = GeneralView(tab, "General")
+    view = GeneralView(tab=tab, name="General")
 
     assert view.cases_folder_path.text() == "/start/cases"
     assert view.types_proceedings.toPlainText() == "Civile,Penale"
