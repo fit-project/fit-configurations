@@ -7,7 +7,8 @@
 # -----
 #######
 
-# test
+from fit_common.core import AcquisitionType
+
 from fit_configurations.controller.tabs.language.language import (
     LanguageController as LanguageController,
 )
@@ -19,5 +20,5 @@ def get_language():
     return controller.configuration["language"]
 
 
-def show_configuration_dialog():
-    Configuration().show()
+def show_configuration_dialog(acquisition_type: AcquisitionType | None = None):
+    Configuration(acquisition_type=acquisition_type).show()

@@ -5,7 +5,7 @@
 # SPDX-License-Identifier: LGPL-3.0-or-later
 ######
 
-from fit_common.core import get_platform, is_admin, is_npcap_installed
+from fit_common.core import AcquisitionType, get_platform, is_admin, is_npcap_installed
 from PySide6 import QtCore, QtWidgets
 
 from fit_configurations.controller.tabs.network.network_check import (
@@ -20,13 +20,18 @@ from fit_configurations.view.tabs.tab import TabView
 class NetworkView(TabView):
     __is_tab__ = True
 
-    def __init__(self, tab: QtWidgets.QWidget, name: str):
+    def __init__(
+        self,
+        acquisition_type: AcquisitionType | None = None,
+        tab: QtWidgets.QWidget = None,
+        name: str = "",
+    ):
         self.tool_controller = NetworkToolController()
         self.check_controller = NetworkCheckController()
         self._tool_config = self.tool_controller.configuration
         self._check_config = self.check_controller.configuration
 
-        super().__init__(tab, name)
+        super().__init__(acquisition_type=acquisition_type, tab=tab, name=name)
 
     def init_ui(self):
         # TOOL CHECKBOXES

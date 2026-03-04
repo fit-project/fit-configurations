@@ -8,6 +8,7 @@
 import imaplib
 import smtplib
 
+from fit_common.core import AcquisitionType
 from fit_common.gui.clickable_label import ClickableLabel as ClickableLabelView
 from fit_common.gui.error import Error as ErrorView
 from PySide6 import QtCore, QtWidgets
@@ -22,9 +23,14 @@ from fit_configurations.view.tabs.tab import TabView
 class PecView(TabView, QtCore.QObject):
     controller_class = PecController
 
-    def __init__(self, tab: QtWidgets.QWidget, name: str):
+    def __init__(
+        self,
+        acquisition_type: AcquisitionType | None = None,
+        tab: QtWidgets.QWidget = None,
+        name: str = "",
+    ):
         QtCore.QObject.__init__(self)
-        super().__init__(tab, name)
+        super().__init__(acquisition_type=acquisition_type, tab=tab, name=name)
 
     def init_ui(self):
         self.translations = load_translations()

@@ -11,7 +11,7 @@ from importlib import import_module
 from inspect import isclass
 
 from fit_assets import resources  # noqa: F401
-from fit_common.core import get_version
+from fit_common.core import AcquisitionType, get_version
 from fit_common.gui.ui_translation import translate_ui
 from PySide6 import QtCore, QtWidgets
 
@@ -19,11 +19,18 @@ from fit_configurations.lang import load_translations
 from fit_configurations.view.configuration_ui import Ui_fit_configuration
 from fit_configurations.view.tabs import TAB_MODULES
 
+NON_WEB_SKIPPED_TABS = {
+    "NetworkView",
+    "PacketCaptureView",
+}
+
 
 class Configuration(QtWidgets.QDialog):
-    def __init__(self, parent=None):
+    def __init__(self, acquisition_type: AcquisitionType | None = None, parent=None):
         super(Configuration, self).__init__(parent)
         self.__translations = load_translations()
+
+        self.__acquisition_type = acquisition_type
 
         self.__tabs = []
         self.__init_ui()
@@ -55,7 +62,9 @@ class Configuration(QtWidgets.QDialog):
 
         self.__load_tabs()
         for tab in self.__tabs:
-            self.ui.menu_tabs.addTopLevelItem(QtWidgets.QTreeWidgetItem([tab.name]))
+            item = QtWidgets.QTreeWidgetItem([tab.name])
+            item.setData(0, QtCore.Qt.UserRole, tab.index)
+            self.ui.menu_tabs.addTopLevelItem(item)
 
         if self.ui.menu_tabs.topLevelItemCount() > 0:
             self.ui.tabs.setCurrentIndex(0)
@@ -63,7 +72,8 @@ class Configuration(QtWidgets.QDialog):
             self.ui.menu_tabs.itemClicked.connect(self.__on_tab_clicked)
 
     def __on_tab_clicked(self, item, column):
-        self.ui.tabs.setCurrentIndex(self.ui.menu_tabs.indexOfTopLevelItem(item))
+        tab_index = item.data(0, QtCore.Qt.UserRole)
+        self.ui.tabs.setCurrentIndex(tab_index)
 
     def mousePressEvent(self, event):
         self.dragPos = event.globalPosition().toPoint()
@@ -75,7 +85,7 @@ class Configuration(QtWidgets.QDialog):
             event.accept()
 
     def __load_tabs(self):
-        for modname in TAB_MODULES:
+        for index, modname in enumerate(TAB_MODULES):
             try:
                 module = import_module(modname)
             except Exception:
@@ -88,9 +98,31 @@ class Configuration(QtWidgets.QDialog):
                     ui_tab = getattr(self.ui, ui_name, None)
                     if not ui_tab:
                         continue
-                    tab_instance = obj(
-                        ui_tab, self.__translations.get(ui_name.upper(), {})
+                    tab_label = self.__translations.get(ui_name.upper(), {})
+                    try:
+                        tab_instance = obj(
+                            acquisition_type=self.__acquisition_type,
+                            tab=ui_tab,
+                            name=tab_label,
+                        )
+                    except TypeError as exc:
+                        if "unexpected keyword argument 'acquisition_type'" not in str(exc):
+                            raise
+                        tab_instance = obj(ui_tab, tab_label)
+
+                    if tab_instance:
+                        tab_instance.index = index
+
+                    tab_name = tab_instance.__class__.__name__
+                    skip_for_non_web = (
+                        self.__acquisition_type is not None
+                        and self.__acquisition_type is not AcquisitionType.WEB
+                        and tab_name in NON_WEB_SKIPPED_TABS
                     )
+
+                    if skip_for_non_web:
+                        continue
+
                     self.__tabs.append(tab_instance)
 
     def accept(self):

@@ -11,6 +11,7 @@ from __future__ import annotations
 
 from typing import Any, ClassVar
 
+from fit_common.core import AcquisitionType
 from PySide6 import QtWidgets
 
 
@@ -18,12 +19,19 @@ class TabView:
     __is_tab__ = True
     controller_class: ClassVar[type[Any] | None] = None
 
-    def __init__(self, tab: QtWidgets.QWidget, name: str):
+    def __init__(
+        self,
+        acquisition_type: AcquisitionType | None = None,
+        tab: QtWidgets.QWidget = None,
+        name: str = "",
+    ):
+
         self.tab = tab
         self.name = name
         self.controller: Any | None
+        self.__acquisition_type = acquisition_type
         self._configuration: dict[str, Any]
-
+        self.__index = 0
         if self.controller_class is not None:
             self.controller = self.controller_class()
             self._configuration = self.controller.configuration
@@ -33,6 +41,14 @@ class TabView:
 
         self.init_ui()
         self.set_form_data(self._configuration)
+
+    @property
+    def index(self):
+        return self.__index
+
+    @index.setter
+    def index(self, value):
+        self.__index = value
 
     def init_ui(self) -> None:
         pass
