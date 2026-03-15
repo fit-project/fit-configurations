@@ -9,7 +9,9 @@ from fit_configurations.model.tabs.general.general import GeneralModel
 from fit_configurations.model.tabs.language.language import LanguageModel
 from fit_configurations.model.tabs.network.network_check import NetworkCheckModel
 from fit_configurations.model.tabs.network.network_tool import NetworkToolModel
-from fit_configurations.model.tabs.packet_capture.packet_capture import PacketCaptureModel
+from fit_configurations.model.tabs.packet_capture.packet_capture import (
+    PacketCaptureModel,
+)
 from fit_configurations.model.tabs.pec.pec import PecModel
 from fit_configurations.model.tabs.screen_recorder.screen_recorder import (
     ScreenRecorderModel,
@@ -18,7 +20,9 @@ from fit_configurations.model.tabs.timestamp.timestamp import TimestampModel
 
 
 @pytest.mark.integration
-def test_model_defaults_for_all_tabs(sqlite_db_path, monkeypatch: pytest.MonkeyPatch) -> None:
+def test_model_defaults_for_all_tabs(
+    sqlite_db_path, monkeypatch: pytest.MonkeyPatch
+) -> None:
     monkeypatch.setattr(
         "fit_configurations.model.tabs.general.general.get_platform", lambda: "lin"
     )
@@ -75,7 +79,7 @@ def test_model_defaults_for_all_tabs(sqlite_db_path, monkeypatch: pytest.MonkeyP
 
     recorder_row = ScreenRecorderModel().get_first_or_default()[0]
     assert recorder_row.enabled_video is True
-    assert recorder_row.enabled_audio is False
+    assert recorder_row.enabled_audio is True
     assert recorder_row.filename == "acquisition_video"
 
     timestamp_row = TimestampModel().get_first_or_default()[0]
@@ -84,7 +88,9 @@ def test_model_defaults_for_all_tabs(sqlite_db_path, monkeypatch: pytest.MonkeyP
 
 
 @pytest.mark.integration
-def test_models_update_roundtrip(sqlite_db_path, monkeypatch: pytest.MonkeyPatch) -> None:
+def test_models_update_roundtrip(
+    sqlite_db_path, monkeypatch: pytest.MonkeyPatch
+) -> None:
     monkeypatch.setattr(
         "fit_configurations.model.tabs.general.general.get_platform", lambda: "lin"
     )
@@ -95,12 +101,14 @@ def test_models_update_roundtrip(sqlite_db_path, monkeypatch: pytest.MonkeyPatch
     model = TimestampModel()
     row = model.get_first_or_default()[0]
 
-    model.update({
-        "id": row.id,
-        "enabled": False,
-        "server_name": "https://tsa.example.org",
-        "cert_url": "https://tsa.example.org/cert.crt",
-    })
+    model.update(
+        {
+            "id": row.id,
+            "enabled": False,
+            "server_name": "https://tsa.example.org",
+            "cert_url": "https://tsa.example.org/cert.crt",
+        }
+    )
 
     updated = TimestampModel().get_first_or_default()[0]
     assert updated.enabled is False

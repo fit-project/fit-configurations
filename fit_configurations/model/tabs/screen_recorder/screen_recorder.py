@@ -8,6 +8,7 @@
 ######
 
 from sqlalchemy import Boolean, Column, Integer, String, inspect, text
+
 from fit_configurations.model.tabs.tab import TabModel
 
 
@@ -28,7 +29,9 @@ class ScreenRecorderModel(TabModel):
         if not inspector.has_table(self.__tablename__):
             return
 
-        columns = {column["name"] for column in inspector.get_columns(self.__tablename__)}
+        columns = {
+            column["name"] for column in inspector.get_columns(self.__tablename__)
+        }
 
         with self.db.engine.begin() as connection:
             if "enabled" in columns and "enabled_video" not in columns:
@@ -50,7 +53,7 @@ class ScreenRecorderModel(TabModel):
 
     def set_default_values(self):
         self.enabled_video = True
-        self.enabled_audio = False
+        self.enabled_audio = True
         self.filename = "acquisition_video"
 
         self.db.session.add(self)
