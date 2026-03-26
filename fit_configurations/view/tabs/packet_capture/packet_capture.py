@@ -33,17 +33,22 @@ class PacketCaptureView(TabView):
         self.filename_input.setEnabled(self.enable_checkbox.isChecked())
 
     def set_form_data(self, data):
-        enabled = data.get("enabled", False)
-        if enabled and is_admin():
-            if get_platform() == "win":
-                enabled = is_npcap_installed()
-            else:
-                enabled = True
-        else:
-            enabled = False
+        configured_enabled = data.get("enabled", False)
+        admin = is_admin()
 
-        self.enable_checkbox.setEnabled(enabled)
-        self.enable_checkbox.setChecked(enabled)
+        if not admin:
+            checkbox_enabled = False
+            checkbox_checked = False
+        else:
+            checkbox_enabled = True
+            if get_platform() == "win":
+                checkbox_checked = configured_enabled and is_npcap_installed()
+                checkbox_enabled = is_npcap_installed()
+            else:
+                checkbox_checked = configured_enabled
+
+        self.enable_checkbox.setEnabled(checkbox_enabled)
+        self.enable_checkbox.setChecked(checkbox_checked)
         self.filename_input.setText(data.get("filename", ""))
         self._on_enable_checkbox_changed()
 

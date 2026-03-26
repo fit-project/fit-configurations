@@ -58,17 +58,22 @@ class NetworkView(TabView):
         self.nslookup.setChecked(self._tool_config["nslookup"])
         self.ssl_certificate.setChecked(self._tool_config["ssl_certificate"])
 
-        enabled = self._tool_config["traceroute"]
-        if enabled and is_admin() and get_platform() != "win":
-            enabled = True
-        elif (
-            enabled and is_admin() and get_platform() == "win" and is_npcap_installed()
-        ):
-            enabled = True
+        configured_enabled = self._tool_config["traceroute"]
+        admin = is_admin()
+
+        if not admin:
+            checkbox_enabled = False
+            checkbox_checked = False
         else:
-            enabled = False
-        self.traceroute.setEnabled(enabled)
-        self.traceroute.setChecked(enabled)
+            checkbox_enabled = True
+            if get_platform() == "win":
+                checkbox_checked = configured_enabled and is_npcap_installed()
+                checkbox_enabled = is_npcap_installed()
+            else:
+                checkbox_checked = configured_enabled
+
+        self.traceroute.setEnabled(checkbox_enabled)
+        self.traceroute.setChecked(checkbox_checked)
 
         # Check config
         self.ntp_server.setText(self._check_config["ntp_server"])
